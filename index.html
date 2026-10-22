@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>权益中心</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+/* ================= 全局 Token ================= */
+:root{
+  --red:#D62F26; --red-deep:#A3241C; --red-sub:#C25B53; --red-light:#FDECEA;
+  --blue:#1677FF; --blue-deep:#0E4FA8; --blue-sub:#3A7BD5; --blue-light:#EAF2FF;
+  --bg:#F4F5F7; --card:#FFFFFF; --gray-card:#F7F8FA; --btn-sub:#F2F3F5;
+  --t1:#1D2129; --t2:#4E5969; --t3:#86909C; --t4:#C9CDD4;
+  --line:#E5E6EB; --dash-red:#F2D4D1; --dash-blue:#D4E4FF;
+  --ok:#00A65E; --ok-light:#E8F7EE;
+  --warn:#B26A00; --warn-deep:#8A4B00; --warn-light:#FFF7E8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  background:#E8EAED;display:flex;justify-content:center;align-items:center;
+  color:var(--t1);
+}
+button{font-family:inherit;border:none;background:none;cursor:pointer;}
+input{font-family:inherit;border:none;outline:none;background:transparent;}
+i{line-height:1;display:inline-flex;}
+/* ================= 手机容器 ================= */
+.phone{
+  width:390px;height:100vh;max-height:844px;background:var(--bg);
+  position:relative;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.18);
+  border-radius:0;display:flex;flex-direction:column;
+}
+.views{flex:1;overflow-y:auto;position:relative;scrollbar-width:none;}
+.views::-webkit-scrollbar{display:none;}
+.mask{
+  position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:50;
+  display:none;padding:32px 24px;overflow-y:auto;scrollbar-width:none;
+}
+.mask::-webkit-scrollbar{display:none;}
+.mask.show{display:flex;}
+.mask.center{align-items:center;}
+.mask.top{align-items:flex-start;}
+.dialog{
+  width:342px;margin:auto;background:var(--card);border-radius:18px;
+  padding:20px 20px 16px 20px;display:flex;flex-direction:column;gap:16px;
+  box-shadow:0 12px 32px rgba(0,0,0,.14);
+}
+.mask.show .dialog{animation:pop .24s ease-out;}
+@keyframes pop{from{transform:scale(.94);opacity:.4;}to{transform:scale(1);opacity:1;}}
+/* ================= 弹窗通用 ================= */
+.dlg-head{display:flex;align-items:flex-start;justify-content:space-between;}
+.dlg-title-wrap{display:flex;flex-direction:column;gap:4px;}
+.dlg-title{font-size:17px;font-weight:700;line-height:24px;color:var(--t1);}
+.dlg-sub{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);}
+.dlg-close{width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dlg-close i{font-size:16px;color:var(--t3);}
+/* 信息卡 */
+.info-card{
+  height:57px;border-radius:12px;padding:0 14px;display:flex;
+  align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.info-card.red{background:var(--red-light);}
+.info-card.blue{background:var(--blue-light);}
+.info-left{display:flex;align-items:center;gap:10px;min-width:0;}
+.info-ico{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.info-ico.red{background:var(--red);}
+.info-ico.blue{background:var(--blue);}
+.info-ico i{font-size:16px;color:#FFFFFF;}
+.info-txt{display:flex;flex-direction:column;gap:2px;}
+.info-name{font-size:12px;font-weight:700;line-height:17px;}
+.info-name.red{color:var(--red-deep);}
+.info-name.blue{color:var(--blue-deep);}
+.info-desc{font-size:10px;font-weight:400;line-height:14px;}
+.info-desc.red{color:var(--red-sub);}
+.info-desc.blue{color:var(--blue-sub);}
+.info-price{display:flex;align-items:flex-start;flex-shrink:0;}
+.info-price .cur{font-size:11px;font-weight:700;line-height:17px;position:relative;top:4px;}
+.info-price .num{font-size:22px;font-weight:900;line-height:26px;}
+.info-card.red .cur,.info-card.red .num{color:var(--red);}
+.info-card.blue .cur,.info-card.blue .num{color:var(--blue);}
+/* 积分扣除条 */
+.points-bar{
+  height:39px;border-radius:10px;background:var(--gray-card);padding:0 12px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.points-l{display:flex;align-items:center;gap:6px;}
+.points-l i{font-size:14px;color:var(--warn);}
+.points-l span{font-size:12px;font-weight:500;line-height:17px;color:var(--t2);}
+.points-r{display:flex;align-items:baseline;gap:2px;}
+.points-r .val{font-size:16px;font-weight:900;line-height:17px;}
+.points-r .unit{font-size:11px;font-weight:400;line-height:17px;color:var(--t3);}
+.points-r.red .val{color:var(--red);}
+.points-r.blue .val{color:var(--blue);}
+/* 输入区 */
+.input-wrap{display:flex;flex-direction:column;gap:8px;}
+.phone-input{
+  height:48px;border-radius:12px;border:1px solid var(--red);
+  padding:0 14px;display:flex;align-items:center;gap:8px;background:var(--card);
+  transition:border-color .15s;
+}
+.phone-input.blue{border-color:var(--blue);}
+.phone-input.err{border:2px solid var(--red);}
+.zone{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+.zone span{font-size:14px;font-weight:500;line-height:20px;color:var(--t1);}
+.zone i{font-size:14px;color:var(--t3);}
+.divider{width:2px;height:18px;background:var(--line);flex-shrink:0;border-radius:1px;}
+#phoneGas,#phoneVoucher{flex:1;min-width:0;font-size:16px;font-weight:500;line-height:22px;color:var(--t1);caret-color:var(--red);}
+#phoneVoucher{caret-color:var(--blue);}
+#phoneGas::placeholder,#phoneVoucher::placeholder{color:var(--t4);font-weight:400;}
+.clear-btn{width:20px;height:20px;border-radius:50%;background:var(--btn-sub);display:none;align-items:center;justify-content:center;flex-shrink:0;}
+.clear-btn.show{display:flex;}
+.clear-btn i{font-size:13px;color:var(--t3);}
+.check-tip{display:none;align-items:flex-start;gap:4px;}
+.check-tip.show{display:flex;}
+.check-tip i{font-size:12px;margin-top:1px;flex-shrink:0;}
+.check-tip span{font-size:11px;font-weight:400;line-height:15px;}
+.check-tip.ok i,.check-tip.ok span{color:var(--ok);}
+.check-tip.bad i,.check-tip.bad span{color:var(--red);}
+/* 温馨提示 */
+.warn-box{
+  min-height:72px;border-radius:10px;padding:10px 12px;background:var(--warn-light);
+  display:flex;flex-direction:column;gap:4px;flex-shrink:0;
+}
+.warn-head{display:flex;align-items:center;gap:4px;}
+.warn-head i{font-size:12px;color:var(--warn-deep);}
+.warn-head span{font-size:11px;font-weight:700;line-height:15px;color:var(--warn-deep);}
+.warn-body{font-size:10px;font-weight:400;line-height:15px;color:var(--warn);height:30px;}
+/* 按钮组 */
+.btn-row{padding-top:2px;display:flex;gap:10px;}
+.btn-cancel{
+  width:101px;height:44px;border-radius:22px;background:var(--btn-sub);
+  font-size:15px;font-weight:500;line-height:21px;color:var(--t2);flex-shrink:0;
+}
+.btn-main{
+  flex:1;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:15px;font-weight:700;line-height:21px;color:#FFFFFF;
+}
+.btn-main.red{background:var(--red);box-shadow:0 4px 14px rgba(214,47,38,.28);}
+.btn-main.blue{background:var(--blue);box-shadow:0 4px 14px rgba(22,119,255,.28);}
+.btn-main i{font-size:16px;color:#FFFFFF;}
+.btn-main:disabled{opacity:.6;}
+#mGasOk .btn-main, #mVoucherOk .btn-main{height:42px;border-radius:21px;flex:0 0 auto;width:100%;}
+/* 协议行 */
+.agree-row{display:flex;align-items:center;justify-content:center;gap:4px;}
+.checkbox{
+  width:13px;height:13px;border-radius:3px;border:1px solid var(--t4);background:var(--card);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.checkbox.checked{background:var(--red);border-color:var(--red);}
+.checkbox.checked.blue{background:var(--blue);border-color:var(--blue);}
+.checkbox i{font-size:9px;color:#FFFFFF;display:none;}
+.checkbox.checked i{display:inline-flex;}
+.agree-row .a-txt{font-size:10px;font-weight:400;line-height:14px;color:var(--t3);}
+.agree-row .a-link{font-size:10px;font-weight:400;line-height:14px;}
+.agree-row.red .a-link{color:var(--red);}
+.agree-row.blue .a-link{color:var(--blue);}
+/* 卡外底部说明 */
+.dlg-foot{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:4px;}
+.dlg-foot i{font-size:11px;color:var(--t4);}
+.dlg-foot span{font-size:10px;font-weight:400;line-height:14px;color:var(--t4);}
+/* ================= 成功弹窗 ================= */
+.dlg-ok{
+  width:342px;margin:auto;background:var(--card);border-radius:20px;
+  padding:24px 20px 20px 20px;display:flex;flex-direction:column;gap:16px;
+  box-shadow:0 12px 32px rgba(0,0,0,.14);
+}
+.mask.show .dlg-ok{animation:pop .24s ease-out;}
+.ok-ico{width:64px;height:64px;border-radius:50%;background:var(--ok-light);display:flex;align-items:center;justify-content:center;margin:0 auto;flex-shrink:0;}
+.ok-ico-in{width:44px;height:44px;border-radius:50%;background:var(--ok);display:flex;align-items:center;justify-content:center;}
+.ok-ico-in i{font-size:24px;color:#FFFFFF;}
+.ok-txt{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.ok-title{font-size:19px;font-weight:700;line-height:26px;color:var(--t1);}
+.ok-sub{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);}
+.result-card{border-radius:14px;padding:14px 16px;background:var(--gray-card);display:flex;flex-direction:column;gap:10px;}
+.r-row{display:flex;align-items:baseline;justify-content:space-between;}
+.r-label{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);flex-shrink:0;}
+.r-value{font-size:12px;font-weight:500;line-height:17px;color:var(--t1);text-align:right;}
+.r-value.hl-red{color:var(--red);font-weight:700;}
+.r-value.hl-blue{color:var(--blue);font-weight:700;}
+.r-value .deduct{font-size:10px;font-weight:400;line-height:17px;color:var(--t4);margin-left:4px;}
+.guide-card{border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;}
+.guide-card.red{background:var(--red-light);}
+.guide-card.blue{background:var(--blue-light);}
+.guide-card > i{font-size:16px;flex-shrink:0;margin-top:1px;}
+.guide-card.red > i{color:var(--red);}
+.guide-card.blue > i{color:var(--blue);}
+.guide-txt{display:flex;flex-direction:column;gap:4px;}
+.guide-title{font-size:11px;font-weight:700;line-height:16px;}
+.guide-title.red{color:var(--red-deep);}
+.guide-title.blue{color:var(--blue-deep);}
+.guide-body{font-size:10px;font-weight:400;line-height:15px;}
+.guide-body.red{color:var(--red-sub);}
+.guide-body.blue{color:var(--blue-sub);}
+.btn-col{padding-top:2px;display:flex;flex-direction:column;gap:8px;}
+.btn-sub2{
+  height:42px;border-radius:21px;background:var(--btn-sub);
+  font-size:14px;font-weight:500;line-height:20px;color:var(--t2);width:100%;
+}
+.ok-foot{display:flex;align-items:center;justify-content:center;gap:4px;}
+.ok-foot i{font-size:10px;color:var(--t4);}
+.ok-foot span{font-size:10px;font-weight:400;line-height:14px;color:var(--t4);}
+/* ================= P1 首页 ================= */
+.hero{background:var(--red);padding:0 16px;padding-bottom:24px;flex-shrink:0;}
+.statusbar{height:44px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;}
+.statusbar .time{font-size:15px;font-weight:700;line-height:20px;color:#FFFFFF;letter-spacing:.5px;}
+.statusbar .sicons{display:flex;align-items:center;gap:6px;}
+.statusbar .sicons i{color:#FFFFFF;}
+.statusbar .sicons .i-sig{font-size:12px;}
+.statusbar .sicons .i-wifi{font-size:12px;}
+.statusbar .sicons .i-bat{font-size:14px;}
+.titlebar{padding:8px 0 0;display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.brand-ico{width:28px;height:28px;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brand-ico i{font-size:16px;color:var(--red);}
+.titlebar h1{font-size:17px;font-weight:700;line-height:24px;color:#FFFFFF;flex:1;}
+.kefu-btn{height:28px;padding:0 10px;border-radius:14px;background:#FFFFFF;display:flex;align-items:center;gap:4px;}
+.kefu-btn i{font-size:13px;color:var(--red);}
+.kefu-btn span{font-size:12px;font-weight:500;line-height:17px;color:var(--red);}
+.usercard{
+  background:var(--card);border-radius:16px;padding:16px;
+  box-shadow:0 6px 18px rgba(120,20,16,.16);
+  display:flex;flex-direction:column;gap:12px;
+}
+.user-row{display:flex;align-items:center;gap:12px;}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.avatar i{font-size:20px;color:#FFFFFF;}
+.user-info{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0;}
+.user-line{display:flex;align-items:center;gap:6px;}
+.user-line .uname{font-size:16px;font-weight:700;line-height:22px;color:var(--t1);}
+.tag-login{height:18px;padding:0 6px;border-radius:4px;background:var(--ok-light);display:flex;align-items:center;}
+.tag-login span{font-size:10px;font-weight:500;line-height:14px;color:var(--ok);}
+.switch-link{margin-left:auto;display:flex;align-items:center;gap:2px;flex-shrink:0;}
+.switch-link span{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);}
+.switch-link i{font-size:12px;color:var(--t4);}
+.user-welcome{font-size:11px;font-weight:400;line-height:16px;color:var(--t3);}
+.points-row{
+  background:#FFF8E6;border-radius:12px;padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.points-left{display:flex;align-items:center;gap:8px;}
+.points-left i{font-size:18px;color:#F7BA1E;}
+.points-left .p-num{font-size:20px;font-weight:900;line-height:26px;color:var(--t1);}
+.points-left .p-unit{font-size:11px;font-weight:400;line-height:17px;color:var(--t3);}
+.points-detail{display:flex;align-items:center;gap:2px;}
+.points-detail span{font-size:12px;font-weight:400;line-height:17px;color:var(--t2);}
+.points-detail i{font-size:12px;color:var(--t3);}
+/* 领取提示条 */
+.notice{
+  margin:16px 16px 0;border-radius:10px;background:var(--ok-light);padding:10px 12px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:opacity .5s;
+}
+.notice.hide{opacity:0;}
+.notice i.ic{font-size:14px;color:var(--ok);}
+.notice span{font-size:12px;font-weight:500;line-height:17px;color:var(--ok);flex:1;text-align:center;}
+.notice .nc{width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.notice .nc i{font-size:12px;color:var(--ok);}
+/* 卡券标题行 */
+.sec-row{margin:20px 16px 12px;display:flex;align-items:center;gap:6px;}
+.sec-bar{width:3px;height:14px;border-radius:2px;background:var(--red);}
+.sec-row h2{font-size:14px;font-weight:700;line-height:19px;color:var(--t1);}
+.sec-row .cnt{margin-left:auto;font-size:11px;font-weight:400;line-height:15px;color:var(--t3);}
+/* 卡券卡片 */
+.coupon{
+  width:358px;margin:0 auto 12px;background:var(--card);border-radius:16px;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);display:flex;overflow:hidden;cursor:pointer;
+}
+.coupon-face{
+  width:112px;flex-shrink:0;padding:20px 0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;
+}
+.coupon-face.red{background:var(--red);}
+.coupon-face.blue{background:var(--blue);}
+.face-price{display:flex;align-items:flex-start;}
+.face-price .cur{font-size:14px;font-weight:700;line-height:20px;color:#FFFFFF;position:relative;top:4px;}
+.face-price .num{font-size:32px;font-weight:900;line-height:36px;color:#FFFFFF;}
+.face-type{font-size:11px;font-weight:400;line-height:15px;color:rgba(255,255,255,.86);}
+.face-tag{height:18px;padding:0 6px;border-radius:4px;background:rgba(255,255,255,.22);display:flex;align-items:center;}
+.face-tag span{font-size:10px;font-weight:400;line-height:14px;color:#FFFFFF;}
+.coupon-info{
+  flex:1;min-width:0;padding:14px;display:flex;flex-direction:column;gap:8px;
+}
+.coupon.red .coupon-info{border-left:1px dashed var(--dash-red);}
+.coupon.blue .coupon-info{border-left:1px dashed var(--dash-blue);}
+.ci-head{display:flex;align-items:center;gap:6px;}
+.ci-title{font-size:14px;font-weight:700;line-height:20px;color:var(--t1);white-space:nowrap;}
+.tag-state{height:18px;padding:0 6px;border-radius:4px;display:flex;align-items:center;flex-shrink:0;}
+.tag-state span{font-size:10px;font-weight:500;line-height:14px;}
+.tag-state.pending{background:var(--warn-light);}
+.tag-state.pending span{color:var(--warn);}
+.tag-state.used-red{background:var(--red-light);}
+.tag-state.used-red span{color:var(--red);}
+.tag-state.used-blue{background:var(--blue-light);}
+.tag-state.used-blue span{color:var(--blue);}
+.ci-desc{font-size:11px;font-weight:400;line-height:16px;color:var(--t3);}
+.ci-exp{font-size:11px;font-weight:400;line-height:15px;color:var(--t4);}
+.ci-btn-row{display:flex;justify-content:flex-end;}
+.ci-btn{height:24px;padding:0 8px;border-radius:12px;display:flex;align-items:center;gap:2px;}
+.ci-btn span{font-size:11px;font-weight:500;line-height:15px;color:#FFFFFF;}
+.ci-btn i{font-size:12px;color:#FFFFFF;}
+.ci-btn.red{background:var(--red);}
+.ci-btn.blue{background:var(--blue);}
+.ci-btn.gray{background:var(--btn-sub);}
+.ci-btn.gray span{color:var(--t4);}
+/* 过期提醒 */
+.expire-tip{
+  width:358px;margin:4px auto 0;border-radius:10px;background:var(--warn-light);
+  padding:10px 12px;display:flex;align-items:center;gap:6px;
+}
+.expire-tip i{font-size:14px;color:var(--warn);flex-shrink:0;}
+.expire-tip span{font-size:11px;font-weight:400;line-height:16px;color:var(--warn);}
+/* 使用说明 */
+.rules{
+  width:358px;margin:16px auto 0;background:var(--card);border-radius:16px;padding:16px;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:12px;
+}
+.rules-head{display:flex;align-items:center;gap:6px;}
+.rules-head i{font-size:14px;color:var(--t2);}
+.rules-head h3{font-size:13px;font-weight:700;line-height:18px;color:var(--t1);}
+.rules-list{display:flex;flex-direction:column;gap:10px;}
+.rule-item{display:flex;gap:6px;}
+.rule-item .no{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);flex-shrink:0;}
+.rule-item p{font-size:11px;font-weight:400;line-height:17px;color:var(--t2);}
+/* 指引横幅 */
+.guide-banner{
+  width:358px;margin:12px auto 0;border-radius:16px;background:var(--red-light);
+  padding:14px 16px;display:flex;align-items:center;gap:10px;
+}
+.gb-ico{width:28px;height:28px;border-radius:8px;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.gb-ico i{font-size:16px;color:#FFFFFF;}
+.gb-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
+.gb-title{font-size:13px;font-weight:700;line-height:18px;color:var(--t1);}
+.gb-sub{font-size:10px;font-weight:400;line-height:14px;color:var(--red-sub);}
+.gb-btn{height:28px;padding:0 10px;border-radius:14px;background:#FFFFFF;display:flex;align-items:center;flex-shrink:0;}
+.gb-btn span{font-size:11px;font-weight:500;line-height:16px;color:var(--red);}
+/* 底部信息 */
+.home-foot{padding:20px 16px 30px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.home-foot .hotline{font-size:11px;font-weight:400;line-height:16px;color:var(--t3);}
+.home-foot .agrees{font-size:10px;font-weight:400;line-height:14px;color:var(--t4);}
+/* Toast */
+.toast{
+  position:absolute;left:50%;bottom:96px;transform:translateX(-50%) translateY(8px);
+  background:rgba(29,33,41,.88);color:#FFFFFF;font-size:13px;font-weight:400;line-height:18px;
+  padding:10px 16px;border-radius:8px;max-width:326px;text-align:center;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:99;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="views" id="views">
+
+    <!-- ==================== P1 权益中心首页 ==================== -->
+    <div class="hero">
+      <!-- 状态栏 -->
+      <div class="statusbar">
+        <span class="time">9:41</span>
+        <div class="sicons">
+          <i class="ri-signal-tower-fill i-sig"></i>
+          <i class="ri-wifi-line i-wifi"></i>
+          <i class="ri-battery-fill i-bat"></i>
+        </div>
+      </div>
+      <!-- 标题行 -->
+      <div class="titlebar">
+        <div class="brand-ico"><i class="ri-coupon-3-fill"></i></div>
+        <h1>我的权益</h1>
+        <button class="kefu-btn" onclick="showToast('正在接入客服，请稍候')">
+          <i class="ri-customer-service-2-line"></i>
+          <span>客服</span>
+        </button>
+      </div>
+      <!-- 用户信息卡 -->
+      <div class="usercard">
+        <div class="user-row">
+          <div class="avatar"><i class="ri-user-3-fill"></i></div>
+          <div class="user-info">
+            <div class="user-line">
+              <span class="uname">138****8888</span>
+              <span class="tag-login"><span>已登录</span></span>
+              <div class="switch-link" onclick="showToast('跳转切换账号')">
+                <span>切换</span>
+                <i class="ri-arrow-right-s-line"></i>
+              </div>
+            </div>
+            <span class="user-welcome">欢迎回来，你的专属权益已到账</span>
+          </div>
+        </div>
+        <div class="points-row">
+          <div class="points-left">
+            <i class="ri-coin-fill"></i>
+            <span class="p-num" id="pointsNum">1280</span>
+            <span class="p-unit">积分</span>
+          </div>
+          <div class="points-detail" onclick="showToast('积分明细页，二期上线')">
+            <span>明细</span>
+            <i class="ri-arrow-right-s-line"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 领取成功提示条 -->
+    
+
+    <!-- 卡券标题行 -->
+    <div class="sec-row">
+      <div class="sec-bar"></div>
+      <h2>我的卡券</h2>
+      
+    </div>
+
+    <!-- 加油券卡片 -->
+    <div class="coupon red" id="cardGas" onclick="onCardGas()">
+      <div class="coupon-face red">
+        <div class="face-price"><span class="cur">¥</span><span class="num">100</span></div>
+        <span class="face-type">电子加油券</span>
+        <div class="face-tag"><span>中石化</span></div>
+      </div>
+      <div class="coupon-info">
+        <div class="ci-head">
+          <span class="ci-title">中石化电子加油券</span>
+          <span class="tag-state pending" id="gasTag"></span>
+        </div>
+        <span class="ci-desc">单日限使用一张加油券<br>请抵达油站后再点击使用</span>
+        
+        <div class="ci-btn-row">
+          <span class="ci-exp" style="width: 127.078px; height: 20px; transform: matrix(1, 0, 0, 1, -24, 0);">兑换后 180 天有效期</span><button class="ci-btn red" id="gasBtn" style="">
+            <span id="gasBtnTxt">去使用</span>
+            <i class="ri-arrow-right-s-line" id="gasBtnArrow"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 立减金卡片 -->
+    <div class="coupon blue" id="cardVoucher" onclick="onCardVoucher()">
+      <div class="coupon-face blue">
+        <div class="face-price"><span class="cur">¥</span><span class="num">100</span></div>
+        <span class="face-type">通用立减金</span>
+        <div class="face-tag"><span>支付宝</span></div>
+      </div>
+      <div class="coupon-info">
+        <div class="ci-head">
+          <span class="ci-title">支付通用立减金</span>
+          <span class="tag-state pending" id="voucherTag"></span>
+        </div>
+        <span class="ci-desc">支持在支付宝大部分消费场景使用<br>兑换后到账支付宝卡包</span>
+        
+        <div class="ci-btn-row">
+          <span class="ci-exp" style="width: 136px; height: 20px; transform: matrix(1, 0, 0, 1, -13, 4);">兑换后 60 天有效期</span><button class="ci-btn blue" id="voucherBtn" style="">
+            <span id="voucherBtnTxt">去兑换</span>
+            <i class="ri-arrow-right-s-line" id="voucherBtnArrow"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 过期提醒 -->
+    
+
+    <!-- 权益使用说明 -->
+    <div class="rules">
+      <div class="rules-head">
+        <i class="ri-information-line"></i>
+        <h3>权益使用说明</h3>
+      </div>
+      <div class="rules-list">
+        <div class="rule-item">
+          <span class="no">①</span>
+          <p>加油券需兑换至易捷加油账户，兑换成功后前往易捷加油小程序查看并使用，单日限使用一张。</p>
+        </div>
+        <div class="rule-item">
+          <span class="no">②</span>
+          <p>立减金需兑换至支付宝账户，兑换成功后可在支付宝「卡包 - 券」中查看并使用。</p>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- 使用指引横幅 -->
+    <div class="guide-banner">
+      <div class="gb-ico"><i class="ri-coupon-3-line"></i></div>
+      <div class="gb-txt">
+        <span class="gb-title">不知道怎么用?</span>
+        <span class="gb-sub">查看图文教程，1 分钟学会油站核销与立减金兑换</span>
+      </div>
+      <button class="gb-btn" onclick="showToast('正在打开使用教程')"><span>查看教程</span></button>
+    </div>
+
+    <!-- 底部信息区 -->
+    
+  </div>
+
+  <!-- ==================== P2 中石化加油券-兑换输入手机号弹窗 ==================== -->
+  <div class="mask center" id="mGas">
+    <div class="dialog">
+      <div class="dlg-head">
+        <div class="dlg-title-wrap" style="width:221px;">
+          <span class="dlg-title">兑换到指定易捷加油账户使用</span>
+          <span class="dlg-sub">输入易捷加油账户绑定的手机号</span>
+        </div>
+        <button class="dlg-close" onclick="closeGas()"><i class="ri-close-line"></i></button>
+      </div>
+      <div class="info-card red">
+        <div class="info-left">
+          <div class="info-ico red"><i class="ri-gas-station-fill"></i></div>
+          <div class="info-txt">
+            <span class="info-name red">中石化电子加油券</span>
+            <span class="info-desc red">兑换后到账易捷加油账户，到站核销</span>
+          </div>
+        </div>
+        <div class="info-price"><span class="cur">¥</span><span class="num">100</span></div>
+      </div>
+      <div class="points-bar">
+        <div class="points-l">
+          <i class="ri-coin-fill"></i>
+          <span>扣除积分</span>
+        </div>
+        <div class="points-r red"><span class="val">100</span><span class="unit">积分</span></div>
+      </div>
+      <div class="input-wrap">
+        <div class="phone-input" id="piGas">
+          <div class="zone"><span>+86</span><i class="ri-arrow-down-s-line"></i></div>
+          <div class="divider"></div>
+          <input id="phoneGas" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
+          <button class="clear-btn" id="clrGas" onclick="clearGas(event)"><i class="ri-close-line"></i></button>
+        </div>
+        <div class="check-tip" id="tipGas"><i class="ri-checkbox-circle-fill"></i><span>号码格式正确，兑换后将发放至该易捷加油账户</span></div>
+      </div>
+      <div class="warn-box">
+        <div class="warn-head">
+          <i class="ri-alert-line"></i>
+          <span>单日仅限兑换 1 次</span>
+        </div>
+        <p class="warn-body">单日仅限兑换 1 次，请使用后再来兑换。请确认手机号为易捷加油账户绑定号码，兑换成功后不可撤回、不可更换账户。</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeGas()">取消</button>
+        <button class="btn-main red" id="btnGasOk" onclick="submitGas()">
+          <i class="ri-exchange-dollar-line"></i>
+          <span id="btnGasOkTxt">确认兑换</span>
+        </button>
+      </div>
+      <div class="agree-row red" onclick="toggleAgree(event,'ckGas')">
+        <div class="checkbox checked" id="ckGas"><i class="ri-check-line"></i></div>
+        <span class="a-txt">我已阅读并同意</span>
+        <span class="a-link" onclick="event.stopPropagation();showToast('打开《权益兑换规则》')">《权益兑换规则》</span>
+      </div>
+    </div>
+    <div class="dlg-foot">
+      <i class="ri-shield-check-line"></i>
+      <span>信息仅用于发放加油券权益，不会用于其他用途</span>
+    </div>
+  </div>
+
+  <!-- ==================== P3 中石化加油券-兑换成功提示弹窗 ==================== -->
+  <div class="mask center" id="mGasOk">
+    <div class="dlg-ok">
+      <div class="ok-ico">
+        <div class="ok-ico-in"><i class="ri-check-line"></i></div>
+      </div>
+      <div class="ok-txt">
+        <span class="ok-title">兑换成功</span>
+        <span class="ok-sub">已发放至你的易捷加油账户</span>
+      </div>
+      <div class="result-card">
+        <div class="r-row">
+          <span class="r-label">兑换权益</span>
+          <span class="r-value">中石化电子加油券</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">面值</span>
+          <span class="r-value hl-red">¥100</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">兑换账号</span>
+          <span class="r-value" id="gasAcct">187****8826</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">扣除积分</span>
+          <span class="r-value hl-red">100 积分<span class="deduct">已从账户扣除</span></span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">到账时效</span>
+          <span class="r-value">5分钟内到账</span>
+        </div>
+      </div>
+      <div class="guide-card red">
+        <i class="ri-gas-station-fill"></i>
+        <div class="guide-txt">
+          <span class="guide-title red">如何在油站使用</span>
+          <p class="guide-body red">点击「去使用」，跳转至易捷加油小程序向油站工作人员出示二维码，扫码核销后直接抵扣油费。</p>
+        </div>
+      </div>
+      <div class="btn-col">
+        <button class="btn-main red" onclick="gotoMiniProgram()">
+          <i class="ri-qr-scan-2-line"></i>
+          <span>去使用</span>
+        </button>
+        <button class="btn-sub2" onclick="closeGasOk()">我知道了</button>
+      </div>
+      <div class="ok-foot">
+        <i class="ri-time-line"></i>
+        <span>若 24 小时未到账，请联系客服处理</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== P4 立减金-兑换输入手机号弹窗 ==================== -->
+  <div class="mask center" id="mVoucher">
+    <div class="dialog">
+      <div class="dlg-head">
+        <div class="dlg-title-wrap" style="width:168px;">
+          <span class="dlg-title">兑换支付通用立减金</span>
+          <span class="dlg-sub">请输入支付宝账户绑定的手机号</span>
+        </div>
+        <button class="dlg-close" onclick="closeVoucher()"><i class="ri-close-line"></i></button>
+      </div>
+      <div class="info-card blue">
+        <div class="info-left">
+          <div class="info-ico blue"><i class="ri-alipay-fill"></i></div>
+          <div class="info-txt">
+            <span class="info-name blue">支付通用立减金</span>
+            <span class="info-desc blue">兑换后自动发放至支付宝卡包</span>
+          </div>
+        </div>
+        <div class="info-price"><span class="cur">¥</span><span class="num">100</span></div>
+      </div>
+      <div class="points-bar">
+        <div class="points-l">
+          <i class="ri-coin-fill"></i>
+          <span>扣除积分</span>
+        </div>
+        <div class="points-r blue"><span class="val">106</span><span class="unit">积分</span></div>
+      </div>
+      <div class="input-wrap">
+        <div class="phone-input blue" id="piVoucher">
+          <div class="zone"><span>+86</span><i class="ri-arrow-down-s-line"></i></div>
+          <div class="divider"></div>
+          <input id="phoneVoucher" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
+          <button class="clear-btn show" id="clrVoucher" onclick="clearVoucher(event)"><i class="ri-close-line"></i></button>
+        </div>
+        <div class="check-tip show ok" id="tipVoucher"><i class="ri-checkbox-circle-fill"></i><span>号码格式正确，兑换后将发放至该支付宝账户</span></div>
+      </div>
+      <div class="warn-box">
+        <div class="warn-head">
+          <i class="ri-alert-line"></i>
+          <span>请仔细核对手机号</span>
+        </div>
+        <p class="warn-body">兑换成功后不可撤回、不可更换账户，如号码填写错误造成的损失需自行承担。</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeVoucher()">取消</button>
+        <button class="btn-main blue" id="btnVoucherOk" onclick="submitVoucher()">
+          <i class="ri-exchange-dollar-line"></i>
+          <span id="btnVoucherOkTxt">确认兑换</span>
+        </button>
+      </div>
+      <div class="agree-row blue" onclick="toggleAgree(event,'ckVoucher')">
+        <div class="checkbox checked blue" id="ckVoucher"><i class="ri-check-line"></i></div>
+        <span class="a-txt">我已阅读并同意</span>
+        <span class="a-link" onclick="event.stopPropagation();showToast('打开《权益兑换规则》')">《权益兑换规则》</span>
+      </div>
+    </div>
+    <div class="dlg-foot">
+      <i class="ri-shield-check-line"></i>
+      <span>信息仅用于发放权益，不会用于其他用途</span>
+    </div>
+  </div>
+
+  <!-- ==================== P5 立减金-兑换成功提示弹窗 ==================== -->
+  <div class="mask center" id="mVoucherOk">
+    <div class="dlg-ok">
+      <div class="ok-ico">
+        <div class="ok-ico-in"><i class="ri-check-line"></i></div>
+      </div>
+      <div class="ok-txt">
+        <span class="ok-title">兑换成功</span>
+        <span class="ok-sub">请前往支付宝使用</span>
+      </div>
+      <div class="result-card">
+        <div class="r-row">
+          <span class="r-label">兑换权益</span>
+          <span class="r-value">支付通用立减金</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">面值</span>
+          <span class="r-value hl-blue">¥100</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">兑换账号</span>
+          <span class="r-value" id="voucherAcct">187****8826</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">到账时效</span>
+          <span class="r-value">5 分钟内到账</span>
+        </div>
+      </div>
+      <div class="guide-card blue">
+        <i class="ri-wallet-3-line"></i>
+        <div class="guide-txt">
+          <span class="guide-title blue">如何查看立减金</span>
+          <p class="guide-body blue">打开支付宝 → 卡包 → 券，即可查看并直接使用，付款时自动抵扣。</p>
+        </div>
+      </div>
+      <div class="btn-col">
+        <button class="btn-main blue" onclick="closeVoucherOk()">我知道了</button>
+      </div>
+      <div class="ok-foot">
+        <i class="ri-time-line"></i>
+        <span>若 24 小时未到账，请联系客服处理</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">请在微信中打开，或前往易捷加油 App 查看你的加油券</div>
+</div>
+
+<script>
+/* ================= 状态 ================= */
+var state = {
+  points: 1280,
+  gas: 'pending',      // pending | redeemed
+  voucher: 'pending',
+  gasPhone: '',
+  voucherPhone: ''
+};
+
+/* ================= 工具 ================= */
+function $(id){ return document.getElementById(id); }
+var toastTimer = null;
+function showToast(msg){
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+function fmtPhone(raw){
+  var d = raw.replace(/\D/g,'').slice(0,11);
+  var p1 = d.slice(0,3), p2 = d.slice(3,7), p3 = d.slice(7);
+  var out = p1;
+  if(p2) out += ' ' + p2;
+  if(p3) out += ' ' + p3;
+  return out;
+}
+function maskPhone(d){ return d.slice(0,3) + '****' + d.slice(7); }
+function bindInput(inputId, piId, tipId, clrId, isBlue){
+  var input = $(inputId), pi = $(piId), tip = $(tipId), clr = $(clrId);
+  input.addEventListener('input', function(){
+    input.value = fmtPhone(input.value);
+    clr.classList.toggle('show', input.value.length > 0);
+    tip.className = 'check-tip';
+    pi.classList.remove('err');
+    if(input.value.replace(/\s/g,'').length === 11){
+      var d = input.value.replace(/\s/g,'');
+      if(/^1\d{10}$/.test(d)){
+        tip.className = 'check-tip show ok';
+        tip.innerHTML = '<i class="ri-checkbox-circle-fill"></i><span>' +
+          (isBlue ? '号码格式正确，兑换后将发放至该支付宝账户' : '号码格式正确，兑换后将发放至该易捷加油账户') + '</span>';
+      } else {
+        tip.className = 'check-tip show bad';
+        tip.innerHTML = '<i class="ri-close-circle-fill"></i><span>请输入正确的 11 位手机号</span>';
+        pi.classList.add('err');
+      }
+    }
+  });
+}
+bindInput('phoneGas','piGas','tipGas','clrGas',false);
+bindInput('phoneVoucher','piVoucher','tipVoucher','clrVoucher',true);
+
+function resetInput(piId, tipId, inputId, clrId){
+  $(piId).classList.remove('err');
+  $(tipId).className = 'check-tip';
+  var input = $(inputId);
+  input.value = state[inputId === 'phoneGas' ? 'gasPhone' : 'voucherPhone'] || '';
+  $(clrId).classList.toggle('show', input.value.length > 0);
+}
+function clearGas(e){ e.stopPropagation(); state.gasPhone=''; $('phoneGas').value=''; $('clrGas').classList.remove('show'); $('tipGas').className='check-tip'; $('piGas').classList.remove('err'); }
+function clearVoucher(e){ e.stopPropagation(); state.voucherPhone=''; $('phoneVoucher').value=''; $('clrVoucher').classList.remove('show'); $('tipVoucher').className='check-tip'; $('piVoucher').classList.remove('err'); }
+
+function toggleAgree(e, id){
+  e.stopPropagation();
+  $(id).classList.toggle('checked');
+}
+function getAgree(id){ return $(id).classList.contains('checked'); }
+
+/* ================= 首页提示条 ================= */
+setTimeout(function(){ var t = $('loginTip'); if(t) t.classList.add('hide'); }, 3000);
+function hideTip(){ var t = $('loginTip'); if(t) t.classList.add('hide'); }
+
+/* ================= P1 首页交互 ================= */
+function onCardGas(){
+  /* 加油券支持无限次兑换：无论状态如何，点击均打开兑换弹窗 */
+  resetInput('piGas','tipGas','phoneGas','clrGas');
+  $('mGas').classList.add('show');
+}
+function onCardVoucher(){
+  if(state.voucher === 'pending'){
+    resetInput('piVoucher','tipVoucher','phoneVoucher','clrVoucher');
+    $('mVoucher').classList.add('show');
+  } else {
+    showToast('该权益已兑换至支付宝，请在支付宝卡包中查看');
+  }
+}
+function renderCards(){
+  var pending = 0;
+  if(state.gas === 'pending') pending++;
+  if(state.voucher === 'pending') pending++;
+  var cnt = $('couponCnt'); if(cnt) cnt.textContent = '共 ' + pending + ' 张可用';
+  $('pointsNum').textContent = state.points;
+  /* 兑换成功后卡片保持原样：按钮文案不变（去使用 / 去兑换），不新增「已兑换」标签 */
+}
+
+/* ================= P2 加油券兑换弹窗 ================= */
+function closeGas(){
+  state.gasPhone = $('phoneGas').value.replace(/\s/g,'');
+  $('mGas').classList.remove('show');
+}
+function submitGas(){
+  var d = $('phoneGas').value.replace(/\s/g,'');
+  var tip = $('tipGas'), pi = $('piGas');
+  if(d.length !== 11 || !/^1\d{10}$/.test(d)){
+    pi.classList.add('err');
+    tip.className = 'check-tip show bad';
+    tip.innerHTML = '<i class="ri-close-circle-fill"></i><span>请输入正确的 11 位手机号</span>';
+    return;
+  }
+  if(!getAgree('ckGas')){
+    showToast('请先阅读并同意《权益兑换规则》');
+    return;
+  }
+  if(state.points < 100){
+    showToast('积分不足，当前可用 ' + state.points + ' 积分');
+    return;
+  }
+  var btn = $('btnGasOk');
+  btn.disabled = true;
+  $('btnGasOkTxt').textContent = '兑换中...';
+  setTimeout(function(){
+    btn.disabled = false;
+    $('btnGasOkTxt').textContent = '确认兑换';
+    state.points -= 100;
+    state.gas = 'redeemed';
+    state.gasPhone = d;
+    $('gasAcct').textContent = maskPhone(d);
+    $('mGas').classList.remove('show');
+    $('mGasOk').classList.add('show');
+    renderCards();
+  }, 800);
+}
+/* 遮罩点击：兑换弹窗可关闭，成功弹窗不可关闭 */
+$('mGas').addEventListener('click', function(e){ if(e.target === this) closeGas(); });
+$('mVoucher').addEventListener('click', function(e){ if(e.target === this) closeVoucher(); });
+
+/* ================= P3 加油券成功弹窗 ================= */
+function gotoMiniProgram(){
+  showToast('请在微信中打开，或前往易捷加油 App 查看你的加油券');
+}
+function closeGasOk(){
+  $('mGasOk').classList.remove('show');
+  renderCards();
+}
+
+/* ================= P4 立减金兑换弹窗 ================= */
+function closeVoucher(){
+  state.voucherPhone = $('phoneVoucher').value.replace(/\s/g,'');
+  $('mVoucher').classList.remove('show');
+}
+function submitVoucher(){
+  var d = $('phoneVoucher').value.replace(/\s/g,'');
+  var tip = $('tipVoucher'), pi = $('piVoucher');
+  if(d.length !== 11 || !/^1\d{10}$/.test(d)){
+    pi.classList.add('err');
+    tip.className = 'check-tip show bad';
+    tip.innerHTML = '<i class="ri-close-circle-fill"></i><span>请输入正确的 11 位手机号</span>';
+    return;
+  }
+  if(!getAgree('ckVoucher')){
+    showToast('请先阅读并同意《权益兑换规则》');
+    return;
+  }
+  if(state.points < 106){
+    showToast('积分不足，当前可用 ' + state.points + ' 积分');
+    return;
+  }
+  var btn = $('btnVoucherOk');
+  btn.disabled = true;
+  $('btnVoucherOkTxt').textContent = '兑换中...';
+  setTimeout(function(){
+    btn.disabled = false;
+    $('btnVoucherOkTxt').textContent = '确认兑换';
+    state.points -= 106;
+    state.voucher = 'redeemed';
+    state.voucherPhone = d;
+    $('voucherAcct').textContent = maskPhone(d);
+    $('mVoucher').classList.remove('show');
+    $('mVoucherOk').classList.add('show');
+    renderCards();
+  }, 800);
+}
+
+/* ================= P5 立减金成功弹窗 ================= */
+function closeVoucherOk(){
+  $('mVoucherOk').classList.remove('show');
+  renderCards();
+}
+</script>
+
+
+
+
+
+
+
+
+
+</body></html>
