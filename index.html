@@ -532,7 +532,7 @@ i{line-height:1;display:inline-flex;}
           <input id="phoneGas" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
           <button class="clear-btn" id="clrGas" onclick="clearGas(event)"><i class="ri-close-line"></i></button>
         </div>
-        <div class="check-tip" id="tipGas"><i class="ri-checkbox-circle-fill"></i><span>号码格式正确，兑换后将发放至该易捷加油账户</span></div>
+        <div class="check-tip" id="tipGas"><i class="ri-checkbox-circle-fill"></i><span>兑换后将发放至18789368826该易捷加油账户</span></div>
       </div>
       <div class="warn-box">
         <div class="warn-head">
@@ -643,7 +643,7 @@ i{line-height:1;display:inline-flex;}
           <input id="phoneVoucher" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
           <button class="clear-btn" id="clrVoucher" onclick="clearVoucher(event)"><i class="ri-close-line"></i></button>
         </div>
-        <div class="check-tip" id="tipVoucher"><i class="ri-checkbox-circle-fill"></i><span>号码格式正确，兑换后将发放至该支付宝账户</span></div>
+        <div class="check-tip" id="tipVoucher"><i class="ri-checkbox-circle-fill"></i><span>兑换后将发放至18789368826该支付宝账户</span></div>
       </div>
       <div class="warn-box">
         <div class="warn-head">
@@ -756,7 +756,7 @@ function bindInput(inputId, piId, tipId, clrId, isBlue){
       if(/^1\d{10}$/.test(d)){
         tip.className = 'check-tip show ok';
         tip.innerHTML = '<i class="ri-checkbox-circle-fill"></i><span>' +
-          (isBlue ? '号码格式正确，兑换后将发放至该支付宝账户' : '号码格式正确，兑换后将发放至该易捷加油账户') + '</span>';
+          (isBlue ? '兑换后将发放至' + d + '该支付宝账户' : '兑换后将发放至' + d + '该易捷加油账户') + '</span>';
       } else {
         tip.className = 'check-tip show bad';
         tip.innerHTML = '<i class="ri-close-circle-fill"></i><span>请输入正确的 11 位手机号</span>';
