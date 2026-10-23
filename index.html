@@ -546,11 +546,7 @@ i{line-height:1;display:inline-flex;}
           <span id="btnGasOkTxt">确认兑换</span>
         </button>
       </div>
-      <div class="agree-row red" onclick="toggleAgree(event,'ckGas')">
-        <div class="checkbox checked" id="ckGas"><i class="ri-check-line"></i></div>
-        <span class="a-txt">我已阅读并同意</span>
-        <span class="a-link" onclick="event.stopPropagation();showToast('打开《权益兑换规则》')">《权益兑换规则》</span>
-      </div>
+      
     </div>
     <div class="dlg-foot">
       <i class="ri-shield-check-line"></i>
@@ -643,9 +639,9 @@ i{line-height:1;display:inline-flex;}
           <div class="zone"><span>+86</span><i class="ri-arrow-down-s-line"></i></div>
           <div class="divider"></div>
           <input id="phoneVoucher" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
-          <button class="clear-btn show" id="clrVoucher" onclick="clearVoucher(event)"><i class="ri-close-line"></i></button>
+          <button class="clear-btn" id="clrVoucher" onclick="clearVoucher(event)"><i class="ri-close-line"></i></button>
         </div>
-        <div class="check-tip show ok" id="tipVoucher"><i class="ri-checkbox-circle-fill"></i><span>号码格式正确，兑换后将发放至该支付宝账户</span></div>
+        <div class="check-tip" id="tipVoucher"><i class="ri-checkbox-circle-fill"></i><span>号码格式正确，兑换后将发放至该支付宝账户</span></div>
       </div>
       <div class="warn-box">
         <div class="warn-head">
@@ -661,11 +657,7 @@ i{line-height:1;display:inline-flex;}
           <span id="btnVoucherOkTxt">确认兑换</span>
         </button>
       </div>
-      <div class="agree-row blue" onclick="toggleAgree(event,'ckVoucher')">
-        <div class="checkbox checked blue" id="ckVoucher"><i class="ri-check-line"></i></div>
-        <span class="a-txt">我已阅读并同意</span>
-        <span class="a-link" onclick="event.stopPropagation();showToast('打开《权益兑换规则》')">《权益兑换规则》</span>
-      </div>
+      
     </div>
     <div class="dlg-foot">
       <i class="ri-shield-check-line"></i>
@@ -788,7 +780,7 @@ function toggleAgree(e, id){
   e.stopPropagation();
   $(id).classList.toggle('checked');
 }
-function getAgree(id){ return $(id).classList.contains('checked'); }
+function getAgree(id){ var el = $(id); return el ? el.classList.contains('checked') : true; }
 
 /* ================= 首页提示条 ================= */
 setTimeout(function(){ var t = $('loginTip'); if(t) t.classList.add('hide'); }, 3000);
@@ -801,12 +793,9 @@ function onCardGas(){
   $('mGas').classList.add('show');
 }
 function onCardVoucher(){
-  if(state.voucher === 'pending'){
-    resetInput('piVoucher','tipVoucher','phoneVoucher','clrVoucher');
-    $('mVoucher').classList.add('show');
-  } else {
-    showToast('该权益已兑换至支付宝，请在支付宝卡包中查看');
-  }
+  /* 立减金支持无限次兑换：无论状态如何，点击均打开兑换弹窗 */
+  resetInput('piVoucher','tipVoucher','phoneVoucher','clrVoucher');
+  $('mVoucher').classList.add('show');
 }
 function renderCards(){
   var pending = 0;
@@ -911,6 +900,7 @@ function closeVoucherOk(){
   renderCards();
 }
 </script>
+
 
 
 
