@@ -929,8 +929,8 @@ i{line-height:1;display:inline-flex;}
     <div class="face-grid" id="faceGrid">
       <button class="face-itm" onclick="pickFace(5)"><span>¥5</span></button>
       <button class="face-itm" onclick="pickFace(50)"><span>¥50</span></button>
-      <button class="face-itm" onclick="pickFace(100)"><span>¥100</span></button>
-      <button class="face-itm sel" onclick="pickFace(200)"><span>¥200</span></button>
+      <button class="face-itm sel" onclick="pickFace(100)"><span>¥100</span></button>
+      <button class="face-itm" onclick="pickFace(200)"><span>¥200</span></button>
       <button class="face-itm" onclick="pickFace(300)"><span>¥300</span></button>
       <button class="face-itm" onclick="pickFace(500)"><span>¥500</span></button>
     </div>
@@ -939,12 +939,12 @@ i{line-height:1;display:inline-flex;}
     <div class="sku-card pv">
       <div class="sku-left pv">
         <div class="sku-type pv"><span>现金券 | 通用</span></div>
-        <div class="sku-price pv"><span class="cur">¥</span><span class="num" id="pvNum">200</span></div>
+        <div class="sku-price pv"><span class="cur">¥</span><span class="num" id="pvNum">100</span></div>
       </div>
       <div class="sku-dash pv"></div>
       <div class="sku-right" style="width: 264px; height: 112px;">
         <div class="pv-top">
-          <span class="sku-title" id="pvTitle">支付宝通用立减金 200 元</span>
+          <span class="sku-title" id="pvTitle">支付宝通用立减金 100 元</span>
           
         </div>
         <span class="sku-exp" style="">有效期至：2026.11.06 23:59</span><div class="pv-stack" style=""><span style="width: 235px; height: 20px; transform: matrix(1, 0, 0, 1, 0, 4);">可叠加</span></div>
@@ -955,9 +955,9 @@ i{line-height:1;display:inline-flex;}
     <div class="pv-points" style="">
       <div class="pv-points-l">
         <i class="ri-coin-fill"></i>
-        <span>扣除积分·<span id="pvCostTxt">200</span> 积分</span>
+        <span>扣除积分·<span id="pvCostTxt">106</span> 积分</span>
       </div>
-      <div class="pv-points-r"><span class="val" id="pvCost">200</span><span class="unit">积分</span></div>
+      <div class="pv-points-r"><span class="val" id="pvCost">106</span><span class="unit">积分</span></div>
     </div>
 
     <!-- 兑换操作区 -->
@@ -1164,7 +1164,7 @@ i{line-height:1;display:inline-flex;}
           <div class="zone"><span>+86</span><i class="ri-arrow-down-s-line"></i></div>
           <div class="divider"></div>
           <input id="phoneGas" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
-          <button class="clear-btn show" id="clrGas" onclick="clearGas(event)"><i class="ri-close-line"></i></button>
+          <button class="clear-btn" id="clrGas" onclick="clearGas(event)"><i class="ri-close-line"></i></button>
         </div>
         <div class="check-tip" id="tipGas"><i class="ri-checkbox-circle-fill"></i><span>兑换后将发放至18789368826该易捷加油账户</span></div>
       </div>
@@ -1184,10 +1184,7 @@ i{line-height:1;display:inline-flex;}
       </div>
       
     </div>
-    <div class="dlg-foot">
-      <i class="ri-shield-check-line"></i>
-      <span>信息仅用于发放加油券权益，不会用于其他用途</span>
-    </div>
+    
   </div>
 
   <!-- ==================== P3 中石化加油券-兑换成功提示弹窗 ==================== -->
@@ -1295,10 +1292,7 @@ i{line-height:1;display:inline-flex;}
       </div>
       
     </div>
-    <div class="dlg-foot">
-      <i class="ri-shield-check-line"></i>
-      <span>信息仅用于发放权益，不会用于其他用途</span>
-    </div>
+    
   </div>
 
   <!-- ==================== P5 立减金-兑换成功提示弹窗 ==================== -->
@@ -1529,12 +1523,34 @@ function submitGas(){
 $('mGas').addEventListener('click', function(e){ if(e.target === this) closeGas(); });
 $('mVoucher').addEventListener('click', function(e){ if(e.target === this) closeVoucher(); });
 
-/* ================= P3 加油券成功弹窗（V3.0：「去使用」进入已兑换券详情页） ================= */
+/* ================= P3 加油券成功弹窗（「去使用」跳转易捷加油小程序） ================= */
+var YIJI_MINI_LINK = '#小程序://易捷加油/KwAREXFBvtRcunD';
 function gotoMiniProgram(){
   $('mGasOk').classList.remove('show');
-  $('dtFace').textContent = state.gasFace;
-  $('dtAcct').textContent = maskPhone(state.gasPhone || '13888888888');
-  showPage('pgDetail');
+  showPage('pgHome');
+  renderCards();
+  copyMiniLink();
+}
+function copyMiniLink(){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(YIJI_MINI_LINK).then(function(){
+      showToast('小程序口令已复制，请打开微信粘贴进入易捷加油');
+    }, fallbackCopy);
+    return;
+  }
+  fallbackCopy();
+}
+function fallbackCopy(){
+  var ta = document.createElement('textarea');
+  ta.value = YIJI_MINI_LINK;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  var ok = false;
+  try{ ok = document.execCommand('copy'); }catch(err){}
+  document.body.removeChild(ta);
+  showToast(ok ? '小程序口令已复制，请打开微信粘贴进入易捷加油' : '请在微信中粘贴小程序口令进入易捷加油使用');
 }
 function closeGasOk(){
   $('mGasOk').classList.remove('show');
@@ -1588,6 +1604,8 @@ function closeVoucherOk(){
   renderCards();
 }
 </script>
+
+
 
 
 
