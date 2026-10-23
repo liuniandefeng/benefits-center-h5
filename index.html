@@ -12,6 +12,8 @@
 :root{
   --red:#D62F26; --red-deep:#A3241C; --red-sub:#C25B53; --red-light:#FDECEA;
   --blue:#1677FF; --blue-deep:#0E4FA8; --blue-sub:#3A7BD5; --blue-light:#EAF2FF;
+  --jd:#E1251B; --jd-deep:#B01F13;
+  --tel:#00B578; --tel-deep:#007A53; --tel-sub:#4CA987; --tel-light:#E8F7F0; --dash-tel:#C8EADD;
   --bg:#F4F5F7; --card:#FFFFFF; --gray-card:#F7F8FA; --btn-sub:#F2F3F5;
   --t1:#1D2129; --t2:#4E5969; --t3:#86909C; --t4:#C9CDD4;
   --line:#E5E6EB; --dash-red:#F2D4D1; --dash-blue:#D4E4FF;
@@ -201,6 +203,10 @@ i{line-height:1;display:inline-flex;}
   height:42px;border-radius:21px;background:var(--btn-sub);
   font-size:14px;font-weight:500;line-height:20px;color:var(--t2);width:100%;
 }
+.btn-sub2.with-ico{display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-sub2.with-ico i{font-size:14px;color:var(--t2);}
+.btn-sub2.with-ico.red{background:var(--red);color:#FFFFFF;}
+.btn-sub2.with-ico.red i{color:#FFFFFF;}
 .ok-foot{display:flex;align-items:center;justify-content:center;gap:4px;}
 .ok-foot i{font-size:10px;color:var(--t4);}
 .ok-foot span{font-size:10px;font-weight:400;line-height:14px;color:var(--t4);}
@@ -313,6 +319,29 @@ i{line-height:1;display:inline-flex;}
 .ci-btn i{font-size:12px;color:#FFFFFF;}
 .ci-btn.red{background:var(--red);}
 .ci-btn.blue{background:var(--blue);}
+.ci-btn.jd{background:var(--jd);}
+.ci-btn.tel{background:var(--tel);}
+/* 首页快捷入口（我的订单/我的券包） */
+.quick-bar{width:358px;margin:5px auto 10px;background:var(--card);border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.06);display:flex;}
+.quick-itm{flex:1;height:56px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;}
+.quick-itm i{font-size:18px;color:var(--red);}
+.quick-itm span{font-size:13px;font-weight:500;line-height:18px;color:var(--t1);}
+.quick-sep{width:1px;height:24px;background:var(--line);align-self:center;}
+/* 京东E卡 / 话费充值卡（复用 coupon 结构） */
+.coupon.jd{background:#FADBD8;}
+.coupon.jd .face-type{color:var(--red-sub);}
+.coupon.jd .face-tag span{color:var(--jd);}
+.coupon.jd .coupon-info{border-left:1px dashed var(--dash-red);}
+.coupon.jd .ci-title{color:var(--red-deep);}
+.coupon.jd .ci-desc{color:var(--red-sub);}
+.coupon.jd .face-logo img{width:44px;height:44px;object-fit:contain;border-radius:10px;}
+.coupon.tel{background:var(--tel-light);}
+.coupon.tel .face-type{color:var(--tel-sub);}
+.coupon.tel .face-tag span{color:var(--tel);}
+.coupon.tel .coupon-info{border-left:1px dashed var(--dash-tel);}
+.coupon.tel .ci-title{color:var(--tel-deep);}
+.coupon.tel .ci-desc{color:var(--tel-sub);}
+.coupon.tel .face-logo img{width:44px;height:44px;object-fit:contain;}
 .ci-btn.gray{background:var(--btn-sub);}
 .ci-btn.gray span{color:var(--t4);}
 /* 过期提醒 */
@@ -498,6 +527,101 @@ i{line-height:1;display:inline-flex;}
 .pv-btn i{font-size:16px;color:#FFFFFF;}
 .pv-btn span{font-size:15px;font-weight:700;line-height:21px;color:#FFFFFF;}
 .pv-btn-note{font-size:10px;font-weight:400;line-height:14px;color:var(--t4);text-align:center;width:100%;}
+/* ================= 中石化加油券选择面值兑换页（红色体系，V1.0） ================= */
+#pgGasVoucher .nav-title{font-size:16px;font-weight:700;line-height:19px;}
+#pgGasVoucher .pick-bar{background:var(--red);}
+/* 面值组：4 档两列 */
+.face-grid.g4 .face-itm{width:175px;}
+#pgGasVoucher .face-itm.sel{background:var(--red-light);border-color:var(--red);}
+#pgGasVoucher .face-itm.sel span{color:var(--red);}
+/* 已选卡券预览（红橙券面） */
+.sku-card.gv{background:#FDF3EE;cursor:default;margin:12px auto 0;}
+.sku-left.gv{background:#FDF0E7;padding:12px 0 12px 12px;}
+.sku-type.gv{background:#E8552F;}
+.sku-price.gv{padding:0;}
+.sku-price.gv .cur{font-size:14px;font-weight:700;color:#E8552F;}
+.sku-price.gv .num{font-size:38px;font-weight:900;line-height:40px;color:#E8552F;}
+.sku-dash.gv{width:2px;border-left:1px dashed rgba(232,85,47,0.45);}
+.gv-bottom{display:flex;align-items:center;justify-content:space-between;}
+.gv-limit{font-size:11px;font-weight:400;line-height:16px;color:#86909C;}
+.gv-noadd{font-size:11px;font-weight:400;line-height:16px;color:#E8552F;}
+/* 产品介绍卡红色变体 */
+.intro-ico.red{background:var(--red-light);}
+.intro-ico.red i{color:var(--red);}
+.intro-tag.red{background:var(--red-light);}
+.intro-tag.red span{color:var(--red);}
+/* 手机号输入卡 */
+.gv-phone{width:358px;margin:12px auto 0;background:var(--card);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+.gv-ph-head{display:flex;align-items:center;justify-content:space-between;}
+.gv-ph-l{display:flex;align-items:center;gap:6px;}
+.gv-ph-l i{font-size:14px;color:#86909C;flex-shrink:0;}
+.gv-ph-l span{font-size:13px;font-weight:700;line-height:18px;color:var(--t1);}
+.gv-ph-head em{font-style:normal;font-size:10px;font-weight:400;line-height:14px;color:#86909C;}
+.gv-input{
+  height:48px;border-radius:12px;background:#F7F8FA;display:flex;align-items:center;gap:8px;padding:0 14px;
+  border:1px solid transparent;
+}
+.gv-input.focus{border-color:#D62F26;}
+.gv-input.err{border-color:#F53F3F;}
+.gv-zone{font-size:14px;font-weight:500;color:var(--t1);flex-shrink:0;}
+.gv-divider{width:3px;height:18px;background:#E5E6EB;border-radius:2px;flex-shrink:0;}
+.gv-input input{flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:'Noto Sans SC';font-size:16px;font-weight:500;color:var(--t1);padding:0;}
+.gv-clear{width:20px;height:20px;border-radius:50%;background:#F2F3F5;display:none;align-items:center;justify-content:center;flex-shrink:0;border:none;}
+.gv-clear.show{display:flex;}
+.gv-clear i{font-size:13px;color:#86909C;}
+.gv-tip{display:none;align-items:center;gap:4px;}
+.gv-tip.show{display:flex;}
+.gv-tip i{font-size:12px;flex-shrink:0;}
+.gv-tip span{font-size:11px;font-weight:400;line-height:16px;}
+.gv-tip.ok i,.gv-tip.ok span{color:#00A65E;}
+.gv-tip.bad i,.gv-tip.bad span{color:#F53F3F;}
+/* 积分条/主按钮红色 */
+#pgGasVoucher .pv-points-r .val{color:var(--red);}
+#pgGasVoucher .pv-btn{background:var(--red);box-shadow:0 4px 14px rgba(214,47,38,0.28);}
+/* ================= 空状态 / 我的订单（按附件样式） ================= */
+.empty-tip{width:358px;margin:40px auto 0;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.empty-tip i{font-size:36px;color:var(--t4);}
+.empty-tip span{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);}
+.order-card{
+  width:358px;margin:12px auto 0;background:var(--card);border-radius:12px;padding:14px 14px 12px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.oc-head{display:flex;align-items:center;justify-content:space-between;}
+.oc-no{font-size:12px;font-weight:400;line-height:17px;color:var(--t2);}
+.oc-state{font-size:12px;font-weight:500;line-height:17px;color:var(--red);}
+.oc-body{display:flex;align-items:center;gap:10px;}
+.oc-img{
+  width:60px;height:60px;border-radius:8px;background:#FFF3EC;overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.oc-img img{width:40px;height:40px;object-fit:contain;}
+.oc-img.blue{background:var(--blue-light);}
+.oc-img.blue i{font-size:40px;color:var(--blue);}
+.oc-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;}
+.oc-name{font-size:14px;font-weight:500;line-height:20px;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.oc-price{font-size:13px;font-weight:700;line-height:18px;color:#FF6A00;}
+.oc-times{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);flex-shrink:0;align-self:center;}
+.oc-foot{display:flex;align-items:center;justify-content:space-between;}
+.oc-count{font-size:12px;font-weight:400;line-height:17px;color:var(--t2);}
+.oc-pay{font-size:12px;font-weight:400;line-height:17px;color:var(--t1);}
+.oc-pay b{font-size:14px;font-weight:700;color:#FF6A00;}
+.oc-btn{
+  align-self:flex-end;height:32px;padding:0 16px;border-radius:999px;border:1px solid #FF6A00;
+  background:transparent;display:flex;align-items:center;gap:2px;
+}
+.oc-btn span{font-size:12px;font-weight:400;line-height:17px;color:#FF6A00;}
+/* ================= 去加油确认弹窗 / 核销成功弹窗 ================= */
+.ok-ico.green{background:#E8F7EE;}
+.ok-ico.green .ok-ico-in{background:#00B578;}
+.uc-phone{
+  height:52px;border-radius:10px;border:1px solid var(--line);background:var(--card);
+  display:flex;align-items:center;justify-content:space-between;padding:0 14px;
+}
+.uc-phone-l{display:flex;align-items:center;gap:6px;}
+.uc-phone-l i{font-size:14px;color:var(--t3);flex-shrink:0;}
+.uc-phone-l span{font-size:12px;font-weight:400;line-height:17px;color:var(--t3);}
+.uc-phone-r{font-size:14px;font-weight:700;line-height:20px;color:var(--t1);}
+.r-value i{font-size:12px;color:var(--red);flex-shrink:0;}
 /* ================= 已兑换券详情页 ================= */
 .redeem-tip{
   width:358px;margin:12px auto 0;border-radius:10px;background:var(--red-light);
@@ -596,7 +720,7 @@ i{line-height:1;display:inline-flex;}
 
   <!-- ==================== P1 权益中心首页 ==================== -->
   <section class="page active" id="pgHome">
-    <div class="hero">
+    <div class="hero" style="width: 387px; height: 256px;">
       <!-- 状态栏 -->
       <div class="statusbar">
         <span class="time">9:41</span>
@@ -651,8 +775,15 @@ i{line-height:1;display:inline-flex;}
     <!-- 卡券标题行 -->
     
 
+    <!-- 快捷入口（我的订单/我的券包） -->
+    <div class="quick-bar">
+      <div class="quick-itm" onclick="showPage('pgOrders')"><i class="ri-file-list-3-fill"></i><span>我的订单</span></div>
+      <div class="quick-sep"></div>
+      <div class="quick-itm" onclick="showPage('pgList')"><i class="ri-coupon-3-fill"></i><span>我的券包</span></div>
+    </div>
+
     <!-- 加油券产品介绍卡（V3.0：无固定面值） -->
-    <div class="coupon red" id="cardGas" onclick="onCardGas()">
+    <div class="coupon red" id="cardGas" onclick="onCardGas()" style="">
       <div class="coupon-face red">
         <div class="face-logo"><img class="sp" src="sinopec.png" alt="中国石化"></div>
         <span class="face-type">电子加油券</span>
@@ -675,7 +806,7 @@ i{line-height:1;display:inline-flex;}
     </div>
 
     <!-- 立减金产品介绍卡（V3.0：无固定面值） -->
-    <div class="coupon blue" id="cardVoucher" onclick="onCardVoucher()">
+    <div class="coupon blue" id="cardVoucher" onclick="onCardVoucher()" style="">
       <div class="coupon-face blue">
         <div class="face-logo"><i class="ri-alipay-fill"></i></div>
         <span class="face-type">通用立减金</span>
@@ -697,11 +828,47 @@ i{line-height:1;display:inline-flex;}
       </div>
     </div>
 
+    <!-- 京东E卡产品介绍卡 -->
+    <div class="coupon jd" onclick="showToast('京东E卡，二期上线')" style="">
+      <div class="coupon-face">
+        <div class="face-logo"><img src="jd.png" alt="京东"></div>
+        <span class="face-type">京东E卡</span>
+        <div class="face-tag"><span>京东</span></div>
+      </div>
+      <div class="coupon-info">
+        <div class="ci-head">
+          <span class="ci-title">京东E卡</span>
+        </div>
+        <span class="ci-desc">京东商城通用购物卡<br>兑换后 3 年有效</span>
+        <div class="ci-btn-row">
+          <span class="ci-exp" style="width: 138.625px; height: 22px; transform: matrix(1, 0, 0, 1, -15, 0);">兑换后 3 年有效期</span><button class="ci-btn jd" onclick="event.stopPropagation();showToast('京东E卡，二期上线')"><span>去兑换</span><i class="ri-arrow-right-s-line"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 话费充值产品介绍卡 -->
+    <div class="coupon tel" onclick="showToast('话费充值，二期上线')" style="">
+      <div class="coupon-face">
+        <div class="face-logo"><img src="tel.png" alt="话费充值"></div>
+        <span class="face-type">话费充值</span>
+        <div class="face-tag"><span>话费</span></div>
+      </div>
+      <div class="coupon-info">
+        <div class="ci-head">
+          <span class="ci-title">话费充值</span>
+        </div>
+        <span class="ci-desc">支持全国手机号充值<br>兑换后快捷到账</span>
+        <div class="ci-btn-row">
+          <span class="ci-exp" style="width: 152px; height: 24px;">兑换后快捷到账</span><button class="ci-btn tel" onclick="event.stopPropagation();showToast('话费充值，二期上线')"><span>去兑换</span><i class="ri-arrow-right-s-line"></i></button>
+        </div>
+      </div>
+    </div>
+
     <!-- 过期提醒 -->
 
 
     <!-- 权益使用说明（V3.0：两条） -->
-    <div class="rules">
+    <div class="rules" style="">
       <div class="rules-head">
         <i class="ri-information-line"></i>
         <h3>权益使用说明</h3>
@@ -720,7 +887,7 @@ i{line-height:1;display:inline-flex;}
     </div>
 
     <!-- 使用指引横幅 -->
-    <div class="guide-banner">
+    <div class="guide-banner" style="">
       <div class="gb-ico"><i class="ri-coupon-3-line"></i></div>
       <div class="gb-txt">
         <span class="gb-title">不知道怎么用?</span>
@@ -746,114 +913,27 @@ i{line-height:1;display:inline-flex;}
       </div>
       <div class="nav-bar">
         <button class="nav-back" onclick="showPage('pgHome')"><i class="ri-arrow-left-s-line"></i></button>
-        <span class="nav-title">中石化加油券</span>
-        
+        <span class="nav-title">我的券包</span>
+
       </div>
     </div>
 
     <!-- 产品介绍卡 -->
-    
+
 
     <!-- 选择面值标题行 -->
     <div class="pick-row">
       <div class="pick-bar"></div>
-      <h2>我的券包</h2>
+      <h2>我的卡券</h2>
       <div class="pick-right">
         
         
       </div>
     </div>
 
-    <!-- 面值卡券列表（50/100/200/300） -->
-    <div class="sku-list">
-      <div class="sku-card">
-        <div class="sku-left">
-          <div class="sku-type"><span>现金券 | 油品</span></div>
-          <div class="sku-price"><span class="cur">¥</span><span class="num">50</span></div>
-        </div>
-        <div class="sku-dash"></div>
-        <div class="sku-right">
-          <span class="sku-title">ZL-中国石化全国加油券 50 元</span>
-          <span class="sku-exp">有效期至：2026.11.06 23:59</span>
-          <div class="sku-bottom">
-            <div class="sku-rule" onclick="event.stopPropagation();showToast('卡券规则详情，二期上线')">
-              <span>规则</span>
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-            <div class="sku-bottom-r">
-              <span class="sku-noadd">不可叠加</span>
-              <button class="sku-btn" onclick="openGasDlg(50)"><span>去使用</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sku-card">
-        <div class="sku-left">
-          <div class="sku-type"><span>现金券 | 油品</span></div>
-          <div class="sku-price"><span class="cur">¥</span><span class="num">100</span></div>
-        </div>
-        <div class="sku-dash"></div>
-        <div class="sku-right">
-          <span class="sku-title">ZL-中国石化全国加油券 100 元</span>
-          <span class="sku-exp">有效期至：2026.11.06 23:59</span>
-          <div class="sku-bottom">
-            <div class="sku-rule" onclick="event.stopPropagation();showToast('卡券规则详情，二期上线')">
-              <span>规则</span>
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-            <div class="sku-bottom-r">
-              <span class="sku-noadd">不可叠加</span>
-              <button class="sku-btn" onclick="openGasDlg(100)"><span>去使用</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sku-card">
-        <div class="sku-left">
-          <div class="sku-type"><span>现金券 | 油品</span></div>
-          <div class="sku-price"><span class="cur">¥</span><span class="num">200</span></div>
-        </div>
-        <div class="sku-dash"></div>
-        <div class="sku-right">
-          <span class="sku-title">ZL-中国石化全国加油券 200 元</span>
-          <span class="sku-exp">有效期至：2026.11.06 23:59</span>
-          <div class="sku-bottom">
-            <div class="sku-rule" onclick="event.stopPropagation();showToast('卡券规则详情，二期上线')">
-              <span>规则</span>
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-            <div class="sku-bottom-r">
-              <span class="sku-noadd">不可叠加</span>
-              <button class="sku-btn" onclick="openGasDlg(200)"><span>去使用</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sku-card">
-        <div class="sku-left">
-          <div class="sku-type"><span>现金券 | 油品</span></div>
-          <div class="sku-price"><span class="cur">¥</span><span class="num">300</span></div>
-        </div>
-        <div class="sku-dash"></div>
-        <div class="sku-right">
-          <span class="sku-title">ZL-中国石化全国加油券 300 元</span>
-          <span class="sku-exp">有效期至：2026.11.06 23:59</span>
-          <div class="sku-bottom">
-            <div class="sku-rule" onclick="event.stopPropagation();showToast('卡券规则详情，二期上线')">
-              <span>规则</span>
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-            <div class="sku-bottom-r">
-              <span class="sku-noadd">不可叠加</span>
-              <button class="sku-btn" onclick="openGasDlg(300)"><span>去使用</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- 卡券列表（兑换成功后动态生成对应面值卡券） -->
+    <div class="sku-list" id="skuList"><div class="sku-card" data-face="100" data-phone="18789368826"><div class="sku-left"><div class="sku-type"><span>现金券 | 油品</span></div><div class="sku-price"><span class="cur">¥</span><span class="num">100</span></div></div><div class="sku-dash"></div><div class="sku-right"><span class="sku-title">ZL-中国石化全国加油券 100 元</span><span class="sku-exp">有效期至：2026.11.06 23:59</span><div class="sku-bottom"><div class="sku-rule" onclick="event.stopPropagation();showToast('卡券规则详情，二期上线')"><span>规则</span><i class="ri-arrow-right-s-line"></i></div><div class="sku-bottom-r"><span class="sku-noadd">不可叠加</span><button class="sku-btn" onclick="useCoupon(this)"><span>去加油</span></button></div></div></div></div></div>
+    <div class="empty-tip" id="pkgEmpty" style="display: none;"><i class="ri-coupon-3-line"></i><span>暂无卡券，兑换成功后将展示在这里</span></div>
 
     <!-- 兑换说明卡 -->
     <div class="explain-card">
@@ -883,6 +963,29 @@ i{line-height:1;display:inline-flex;}
       <i class="ri-shield-check-line"></i>
       <span>权益由中石化提供，兑换遇到问题可联系在线客服</span>
     </div>
+  </section>
+
+  <!-- ==================== P10 我的订单（兑换成功后生成订单记录） ==================== -->
+  <section class="page" id="pgOrders">
+    <div class="nav-red">
+      <div class="statusbar">
+        <span class="time">9:41</span>
+        <div class="sicons">
+          <i class="ri-signal-tower-line i-sig"></i>
+          <i class="ri-wifi-line i-wifi"></i>
+          <i class="ri-battery-fill i-bat"></i>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <button class="nav-back" onclick="showPage('pgHome')"><i class="ri-arrow-left-s-line"></i></button>
+        <span class="nav-title">我的订单</span>
+
+      </div>
+    </div>
+
+    <!-- 订单列表（兑换成功后动态生成） -->
+    <div id="orderList"><div class="order-card"><div class="oc-head"><span class="oc-no">订单号：YZ1792742135912892</span><span class="oc-state">已收货</span></div><div class="oc-body"><div class="oc-img "><img src="sinopec.png" alt="中石化加油券"></div><div class="oc-info"><span class="oc-name">易点中石化电子加油券100元</span><span class="oc-price">100.00积分</span></div><span class="oc-times">× 1</span></div><div class="oc-foot"><span class="oc-count">共1件商品</span><span class="oc-pay">实付款： <b>100.00积分</b></span></div><button class="oc-btn" onclick="showToast('订单详情，二期上线')"><span>查看详情</span></button></div></div>
+    <div class="empty-tip" id="orderEmpty" style="display: none;"><i class="ri-file-list-3-line"></i><span>暂无订单，兑换成功后将展示在这里</span></div>
   </section>
 
   <!-- ==================== P8 支付宝通用立减金-选择面值兑换页（V1.0 新增） ==================== -->
@@ -993,6 +1096,136 @@ i{line-height:1;display:inline-flex;}
     <div class="page-foot" style="">
       <i class="ri-shield-check-line"></i>
       <span>权益由支付宝提供服务，兑换遇到问题可联系在线客服</span>
+    </div>
+  </section>
+
+  <!-- ==================== P9 中石化加油券-选择面值兑换页（V1.0 新增） ==================== -->
+  <section class="page" id="pgGasVoucher">
+    <div class="nav-red">
+      <div class="statusbar">
+        <span class="time">9:41</span>
+        <div class="sicons">
+          <i class="ri-signal-tower-line i-sig"></i>
+          <i class="ri-wifi-line i-wifi"></i>
+          <i class="ri-battery-fill i-bat"></i>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <button class="nav-back" onclick="showPage('pgHome')"><i class="ri-arrow-left-s-line"></i></button>
+        <span class="nav-title">中石化加油券</span>
+        
+      </div>
+    </div>
+
+    <!-- 产品介绍卡 -->
+    <div class="intro-card">
+      <div class="intro-ico red"><i class="ri-gas-station-fill"></i></div>
+      <div class="intro-txt">
+        <div class="intro-tagline">
+          <span class="intro-name">中国石化全国加油券</span>
+          <span class="intro-tag red"><span>电子券</span></span>
+        </div>
+        <span class="intro-desc">选择面值并输入手机号，兑换后发放至易捷账户</span>
+      </div>
+    </div>
+
+    <!-- 区块标题行 -->
+    <div class="pick-row">
+      <div class="pick-bar"></div>
+      <h2>选择面值</h2>
+      <div class="pick-right">
+        <i class="ri-coupon-3-line"></i>
+        <span>共 4 种面值</span>
+      </div>
+    </div>
+
+    <!-- 面值选择组（两行两列，默认选中 ¥100） -->
+    <div class="face-grid g4" id="gasFaceGrid">
+      <button class="face-itm" onclick="pickGasFace(50)"><span>¥50</span></button>
+      <button class="face-itm sel" onclick="pickGasFace(100)"><span>¥100</span></button>
+      <button class="face-itm" onclick="pickGasFace(200)"><span>¥200</span></button>
+      <button class="face-itm" onclick="pickGasFace(300)"><span>¥300</span></button>
+    </div>
+
+    <!-- 已选卡券预览（只读展示） -->
+    <div class="sku-card gv">
+      <div class="sku-left gv">
+        <div class="sku-type gv"><span>现金券 | 油品</span></div>
+        <div class="sku-price gv"><span class="cur">¥</span><span class="num" id="gvNum">100</span></div>
+      </div>
+      <div class="sku-dash gv"></div>
+      <div class="sku-right">
+        <div class="pv-top">
+          <span class="sku-title" id="gvTitle">ZL-中国石化全国加油券 100 元</span>
+          <span class="sku-exp">有效期至：2026.11.06 23:59</span>
+        </div>
+        <div class="gv-bottom">
+          <span class="gv-limit">单日限用 1 张</span>
+          <span class="gv-noadd">不可叠加</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 手机号输入卡 -->
+    <div class="gv-phone">
+      <div class="gv-ph-head">
+        <div class="gv-ph-l">
+          <i class="ri-phone-line"></i>
+          <span>兑换手机号</span>
+        </div>
+        <em>需为易捷账户绑定号码</em>
+      </div>
+      <div class="gv-input" id="gvPi">
+        <span class="gv-zone">+86</span>
+        <div class="gv-divider"></div>
+        <input id="gvPhone" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
+        <button class="gv-clear show" id="gvClr" onclick="clearGvPhone(event)"><i class="ri-close-line"></i></button>
+      </div>
+      <div class="gv-tip show ok" id="gvTip"><i class="ri-checkbox-circle-fill"></i><span>兑换后将发放至您的券包</span></div>
+    </div>
+
+    <!-- 积分扣除条 -->
+    <div class="pv-points">
+      <div class="pv-points-l">
+        <i class="ri-coin-fill"></i>
+        <span>扣除积分·<span id="gvCostTxt">100</span> 积分</span>
+      </div>
+      <div class="pv-points-r"><span class="val" id="gvCost">100</span><span class="unit">积分</span></div>
+    </div>
+
+    <!-- 兑换操作区 -->
+    <div class="pv-act">
+      <button class="pv-btn" id="btnGvOk" onclick="confirmGas()">
+        <i class="ri-exchange-dollar-line"></i>
+        <span>确认兑换</span>
+      </button>
+      <p class="pv-btn-note">确认后积分立即扣除，兑换成功后不可撤回、不可更换账户</p>
+    </div>
+
+    <!-- 兑换说明卡 -->
+    <div class="explain-card">
+      <div class="explain-head">
+        <i class="ri-information-line"></i>
+        <h3>兑换说明</h3>
+      </div>
+      <div class="explain-item">
+        <div class="no"><span>1</span></div>
+        <p>每张加油券仅可兑换一次，请确认手机号为易捷账户绑定号码。</p>
+      </div>
+      <div class="explain-item">
+        <div class="no"><span>2</span></div>
+        <p>兑换成功后电子券发放至易捷账户，到站出示二维码由工作人员扫码核销。</p>
+      </div>
+      <div class="explain-item">
+        <div class="no"><span>3</span></div>
+        <p>单日限使用一张加油券，多张券之间不可叠加抵扣。</p>
+      </div>
+    </div>
+
+    <!-- 底部提示区 -->
+    <div class="page-foot">
+      <i class="ri-shield-check-line"></i>
+      <span>权益由中石化提供，兑换遇到问题可联系在线客服</span>
     </div>
   </section>
 
@@ -1137,7 +1370,7 @@ i{line-height:1;display:inline-flex;}
     <div class="dialog">
       <div class="dlg-head">
         <div class="dlg-title-wrap" style="width:221px;">
-          <span class="dlg-title">兑换到指定易捷加油账户使用</span>
+          <span class="dlg-title">兑换确认</span>
           <span class="dlg-sub">输入易捷加油账户绑定的手机号</span>
         </div>
         <button class="dlg-close" onclick="closeGas()"><i class="ri-close-line"></i></button>
@@ -1147,26 +1380,26 @@ i{line-height:1;display:inline-flex;}
           <div class="info-ico red"><i class="ri-gas-station-fill"></i></div>
           <div class="info-txt">
             <span class="info-name red">中石化电子加油券</span>
-            <span class="info-desc red">兑换后到账易捷加油账户，到站核销</span>
+            <span class="info-desc red">兑换后到账我的券包，前往券包使用</span>
           </div>
         </div>
-        <div class="info-price"><span class="cur">¥</span><span class="num" id="gasFaceNum">50</span></div>
+        <div class="info-price"><span class="cur">¥</span><span class="num" id="gasFaceNum">100</span></div>
       </div>
       <div class="points-bar">
         <div class="points-l">
           <i class="ri-coin-fill"></i>
           <span>扣除积分</span>
         </div>
-        <div class="points-r red"><span class="val" id="gasCostNum">50</span><span class="unit">积分</span></div>
+        <div class="points-r red"><span class="val" id="gasCostNum">100</span><span class="unit">积分</span></div>
       </div>
       <div class="input-wrap">
         <div class="phone-input" id="piGas">
           <div class="zone"><span>+86</span><i class="ri-arrow-down-s-line"></i></div>
           <div class="divider"></div>
-          <input id="phoneGas" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off">
+          <input id="phoneGas" type="text" inputmode="numeric" placeholder="请输入 11 位手机号" maxlength="13" autocomplete="off" readonly="">
           <button class="clear-btn" id="clrGas" onclick="clearGas(event)"><i class="ri-close-line"></i></button>
         </div>
-        <div class="check-tip" id="tipGas"><i class="ri-checkbox-circle-fill"></i><span>兑换后将发放至18789368826该易捷加油账户</span></div>
+        <div class="check-tip show ok" id="tipGas"><i class="ri-checkbox-circle-fill"></i><span>兑换后将发至您的券包</span></div>
       </div>
       <div class="warn-box">
         <div class="warn-head">
@@ -1195,7 +1428,7 @@ i{line-height:1;display:inline-flex;}
       </div>
       <div class="ok-txt">
         <span class="ok-title">兑换成功</span>
-        <span class="ok-sub">已发放至你的易捷加油账户</span>
+        <span class="ok-sub">已发放至你的券包，请前往使用</span>
       </div>
       <div class="result-card">
         <div class="r-row">
@@ -1227,15 +1460,109 @@ i{line-height:1;display:inline-flex;}
         </div>
       </div>
       <div class="btn-col">
-        <button class="btn-main red" onclick="gotoMiniProgram()">
+        <button class="btn-main red" onclick="gasOkPrimary()">
           <i class="ri-qr-scan-2-line"></i>
-          <span>去使用</span>
+          <span id="gasOkBtnTxt">去使用</span>
         </button>
         <button class="btn-sub2" onclick="closeGasOk()">我知道了</button>
       </div>
       <div class="ok-foot">
         <i class="ri-time-line"></i>
         <span>若 24 小时未到账，请联系客服处理</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== P3b 中石化加油券-去加油确认弹窗 ==================== -->
+  <div class="mask center" id="mGasConfirm">
+    <div class="dialog">
+      <div class="dlg-head">
+        <div class="dlg-title-wrap" style="width:180px;">
+          <span class="dlg-title">确认使用加油券</span>
+          <span class="dlg-sub">请抵达油站后再确认使用</span>
+        </div>
+        <button class="dlg-close" onclick="closeGasConfirm()"><i class="ri-close-line"></i></button>
+      </div>
+      <div class="info-card red">
+        <div class="info-left">
+          <div class="info-ico red"><i class="ri-gas-station-fill"></i></div>
+          <div class="info-txt">
+            <span class="info-name red" id="ucName">ZL-中国石化全国加油券100元</span>
+            <span class="info-desc red">兑换后180天有效，单日限用1张</span>
+          </div>
+        </div>
+        <div class="info-price"><span class="cur">¥</span><span class="num" id="ucFace">100</span></div>
+      </div>
+      <div class="uc-phone">
+        <div class="uc-phone-l"><i class="ri-phone-line"></i><span>兑换时填写的手机号</span></div>
+        <span class="uc-phone-r" id="ucPhone">187****8826</span>
+      </div>
+      <div class="warn-box">
+        <div class="warn-head">
+          <i class="ri-alert-line"></i>
+          <span>请抵达油站后确认兑换</span>
+        </div>
+        <p class="warn-body">确认后请向油站工作人员出示券码，扫码核销后立即抵扣油费；确认后不可撤回、不可更换账户。</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeGasConfirm()">取消</button>
+        <button class="btn-main red" onclick="confirmUseGas()">
+          
+          <span>确认使用</span>
+        </button>
+      </div>
+      <div class="ok-foot">
+        <i class="ri-information-line"></i>
+        <span>券码仅限本人使用，请勿转赠他人</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== P3c 中石化加油券-核销成功弹窗 ==================== -->
+  <div class="mask center" id="mGasUseOk">
+    <div class="dlg-ok">
+      <div class="ok-ico green">
+        <div class="ok-ico-in green"><i class="ri-check-line"></i></div>
+      </div>
+      <div class="ok-txt">
+        <span class="ok-title">已为你跳转易捷加油</span>
+        <span class="ok-sub">请向油站工作人员出示二维码完成核销</span>
+      </div>
+      <div class="result-card">
+        <div class="r-row">
+          <span class="r-label">权益名称</span>
+          <span class="r-value" id="uoName">ZL-中国石化全国加油券100元</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">面值</span>
+          <span class="r-value hl-red" id="uoFace">¥100</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">使用手机号</span>
+          <span class="r-value" id="uoPhone">187****8826</span>
+        </div>
+        <div class="r-row">
+          <span class="r-label">核销状态</span>
+          <span class="r-value hl-red"><i class="ri-information-line"></i>待出示二维码</span>
+        </div>
+      </div>
+      <div class="guide-card red">
+        <i class="ri-qr-code-line"></i>
+        <div class="guide-txt">
+          <span class="guide-title red">在易捷加油小程序出示二维码</span>
+          <p class="guide-body red">进入「易捷加油」小程序 → 我的 → 加油券，向油站工作人员出示券码二维码，扫码核销后直接抵扣油费。</p>
+        </div>
+      </div>
+      <div class="btn-col">
+        <button class="btn-sub2 with-ico red" onclick="useOkPrimary()">
+          <i class="ri-external-link-line"></i>
+          <span>打开易捷加油小程序</span>
+        </button>
+        <button class="btn-sub2" onclick="useOkClose()">我知道了</button>
+      </div>
+      <div class="ok-foot">
+        <i class="ri-time-line"></i>
+        <span>券码有效期至 2026.11.06 23:59，过期自动失效</span>
       </div>
     </div>
   </div>
@@ -1340,7 +1667,7 @@ i{line-height:1;display:inline-flex;}
     </div>
   </div>
 
-  <div class="toast" id="toast">请在微信中打开，或前往易捷加油 App 查看你的加油券</div>
+  <div class="toast" id="toast">话费充值，二期上线</div>
 </div>
 
 <script>
@@ -1357,6 +1684,8 @@ var state = {
 
 /* 立减金面值-积分对照（规格书七章：仅 ¥100=106 为现网确认值，其余档位待活动配置回填，暂按面值占位展示） */
 var VOUCHER_SKUS = { 5: 5, 50: 50, 100: 106, 200: 200, 300: 300, 500: 500 };
+/* 加油券面值-积分对照（中石化规格书七章：仅 ¥100=100 为现网默认值，其余待确认，暂按面值占位展示） */
+var GAS_SKUS = { 50: 50, 100: 100, 200: 200, 300: 300 };
 
 /* ================= 工具 ================= */
 function $(id){ return document.getElementById(id); }
@@ -1430,8 +1759,8 @@ function hideTip(){ var t = $('loginTip'); if(t) t.classList.add('hide'); }
 
 /* ================= P1 首页交互 ================= */
 function onCardGas(){
-  /* V3.0：首页中石化卡「去兑换」→ 进入卡券列表页选面值 */
-  showPage('pgList');
+  /* V1.0：首页中石化卡「去兑换」→ 进入中石化选择面值兑换页 */
+  enterGasPage();
 }
 function onCardVoucher(){
   /* V1.0：立减金卡「去兑换」→ 进入选择面值兑换页 */
@@ -1463,6 +1792,84 @@ function confirmVoucher(){
   $('dlgCostNum').textContent = VOUCHER_SKUS[face];
   $('mVoucher').classList.add('show');
 }
+
+/* ================= P9 中石化选择面值兑换页（V1.0 新增） ================= */
+function pickGasFace(face){
+  /* I-02：切面值联动券面数字/券名/积分，不跳转、不清空已输入手机号 */
+  state.gasFace = face;
+  var pts = GAS_SKUS[face];
+  var items = document.querySelectorAll('#gasFaceGrid .face-itm');
+  var vals = [50, 100, 200, 300];
+  for(var i=0;i<items.length;i++){ items[i].classList.toggle('sel', vals[i] === face); }
+  $('gvNum').textContent = face;
+  $('gvTitle').textContent = 'ZL-中国石化全国加油券 ' + face + ' 元';
+  $('gvCost').textContent = pts;
+  $('gvCostTxt').textContent = pts;
+}
+function enterGasPage(){
+  /* I-01/I-09：进入默认选中 ¥100，同步渲染预览卡与积分条 */
+  pickGasFace(100);
+  showPage('pgGasVoucher');
+}
+function bindGvPhone(){
+  var input = $('gvPhone'), pi = $('gvPi'), tip = $('gvTip'), clr = $('gvClr'), btn = $('btnGvOk');
+  input.addEventListener('input', function(){
+    input.value = fmtPhone(input.value);
+    clr.classList.toggle('show', input.value.length > 0);
+    tip.className = 'gv-tip';
+    pi.classList.remove('err');
+    btn.disabled = true;
+    var d = input.value.replace(/\s/g,'');
+    if(d.length === 11){
+      if(/^1\d{10}$/.test(d)){
+        /* I-04：校验通过，绿色提示 */
+        tip.innerHTML = '<i class="ri-checkbox-circle-fill"></i><span>兑换后将发放至您的券包</span>';
+        tip.className = 'gv-tip show ok';
+        btn.disabled = false;
+      } else {
+        tip.className = 'gv-tip show bad';
+        tip.innerHTML = '<i class="ri-close-circle-fill"></i><span>请输入正确的 11 位手机号</span>';
+        pi.classList.add('err');
+      }
+    } else if(d.length > 0 && d.length < 11){
+      pi.classList.add('err');
+    }
+  });
+  input.addEventListener('focus', function(){ pi.classList.add('focus'); });
+  input.addEventListener('blur', function(){ pi.classList.remove('focus'); });
+}
+bindGvPhone();
+function clearGvPhone(e){
+  /* I-05：清空输入并移除校验提示 */
+  e.stopPropagation();
+  $('gvPhone').value = '';
+  $('gvClr').classList.remove('show');
+  $('gvTip').className = 'gv-tip';
+  $('gvPi').classList.remove('err');
+  $('btnGvOk').disabled = true;
+  $('gvPhone').focus();
+}
+function confirmGas(){
+  /* I-06：校验手机号 → 打开兑换弹窗，弹窗内面值/积分/手机号与所选一致且不可编辑 */
+  var d = $('gvPhone').value.replace(/\s/g,'');
+  var tip = $('gvTip'), pi = $('gvPi');
+  if(d.length !== 11 || !/^1\d{10}$/.test(d)){
+    pi.classList.add('err');
+    tip.className = 'gv-tip show bad';
+    tip.innerHTML = '<i class="ri-close-circle-fill"></i><span>请输入正确的 11 位手机号</span>';
+    return;
+  }
+  gasSource = 'page';
+  var face = state.gasFace;
+  $('gasFaceNum').textContent = face;
+  $('gasCostNum').textContent = GAS_SKUS[face];
+  var pg = $('phoneGas');
+  pg.readOnly = true;
+  pg.value = fmtPhone(d);
+  $('clrGas').classList.remove('show');
+  $('tipGas').className = 'check-tip show ok';
+  $('mGas').classList.add('show');
+}
 function renderCards(){
   var pending = 0;
   if(state.gas === 'pending') pending++;
@@ -1472,11 +1879,71 @@ function renderCards(){
   /* 兑换成功后卡片保持原样：按钮文案不变（去使用 / 去兑换），不新增「已兑换」标签 */
 }
 
+/* ================= 我的券包 / 我的订单（兑换成功后动态生成） ================= */
+function addCoupon(face){
+  var card = document.createElement('div');
+  card.className = 'sku-card';
+  card.dataset.face = face;
+  card.dataset.phone = state.gasPhone;
+  card.innerHTML =
+    '<div class="sku-left">' +
+      '<div class="sku-type"><span>现金券 | 油品</span></div>' +
+      '<div class="sku-price"><span class="cur">¥</span><span class="num">' + face + '</span></div>' +
+    '</div>' +
+    '<div class="sku-dash"></div>' +
+    '<div class="sku-right">' +
+      '<span class="sku-title">ZL-中国石化全国加油券 ' + face + ' 元</span>' +
+      '<span class="sku-exp">有效期至：2026.11.06 23:59</span>' +
+      '<div class="sku-bottom">' +
+        '<div class="sku-rule" onclick="event.stopPropagation();showToast(\'卡券规则详情，二期上线\')">' +
+          '<span>规则</span>' +
+          '<i class="ri-arrow-right-s-line"></i>' +
+        '</div>' +
+        '<div class="sku-bottom-r">' +
+          '<span class="sku-noadd">不可叠加</span>' +
+          '<button class="sku-btn" onclick="useCoupon(this)"><span>去加油</span></button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  $('skuList').prepend(card);
+  $('pkgEmpty').style.display = 'none';
+}
+function addOrder(face, pts, name, imgHtml, imgCls){
+  /* 订单按兑换时间降序：新订单插到列表最前 */
+  var no = 'YZ' + Date.now() + Math.floor(Math.random() * 900 + 100);
+  var card = document.createElement('div');
+  card.className = 'order-card';
+  card.innerHTML =
+    '<div class="oc-head">' +
+      '<span class="oc-no">订单号：' + no + '</span>' +
+      '<span class="oc-state">已收货</span>' +
+    '</div>' +
+    '<div class="oc-body">' +
+      '<div class="oc-img ' + (imgCls || '') + '">' + imgHtml + '</div>' +
+      '<div class="oc-info">' +
+        '<span class="oc-name">' + name + face + '元</span>' +
+        '<span class="oc-price">' + pts.toFixed(2) + '积分</span>' +
+      '</div>' +
+      '<span class="oc-times">× 1</span>' +
+    '</div>' +
+    '<div class="oc-foot">' +
+      '<span class="oc-count">共1件商品</span>' +
+      '<span class="oc-pay">实付款： <b>' + pts.toFixed(2) + '积分</b></span>' +
+    '</div>' +
+    '<button class="oc-btn" onclick="showToast(\'订单详情，二期上线\')"><span>查看详情</span></button>';
+  $('orderList').prepend(card);
+  $('orderEmpty').style.display = 'none';
+}
+
 /* ================= P2 加油券兑换弹窗（V3.0：面值由所选卡券带入） ================= */
+var gasSource = 'page'; /* 兑换来源：page=选择面值页，pkg=我的券包 */
 function openGasDlg(face){
   state.gasFace = face;
   $('gasFaceNum').textContent = face;
-  $('gasCostNum').textContent = face;
+  $('gasCostNum').textContent = GAS_SKUS[face];
+  gasSource = 'pkg';
+  var pg = $('phoneGas');
+  pg.readOnly = false;
   resetInput('piGas','tipGas','phoneGas','clrGas');
   $('mGas').classList.add('show');
 }
@@ -1497,7 +1964,7 @@ function submitGas(){
     showToast('请先阅读并同意《权益兑换规则》');
     return;
   }
-  var cost = state.gasFace;
+  var cost = GAS_SKUS[state.gasFace];
   if(state.points < cost){
     showToast('积分不足，当前可用 ' + state.points + ' 积分');
     return;
@@ -1515,6 +1982,13 @@ function submitGas(){
     $('gasOkFace').textContent = '¥' + cost;
     $('gasOkCost').textContent = cost;
     $('mGas').classList.remove('show');
+    /* I-08：成功弹窗按钮按来源分流——选择面值页「去使用」进券包，券包「去加油」跳易捷小程序 */
+    $('gasOkBtnTxt').textContent = gasSource === 'pkg' ? '去加油' : '去使用';
+    /* 选择面值页兑换成功：券包生成对应面值卡券 + 我的订单生成一笔已收货订单 */
+    if(gasSource === 'page'){
+      addCoupon(cost);
+      addOrder(cost, GAS_SKUS[cost], '易点中石化电子加油券', '<img src="sinopec.png" alt="中石化加油券">');
+    }
     $('mGasOk').classList.add('show');
     renderCards();
   }, 800);
@@ -1523,8 +1997,21 @@ function submitGas(){
 $('mGas').addEventListener('click', function(e){ if(e.target === this) closeGas(); });
 $('mVoucher').addEventListener('click', function(e){ if(e.target === this) closeVoucher(); });
 
-/* ================= P3 加油券成功弹窗（「去使用」跳转易捷加油小程序） ================= */
+/* ================= P3 加油券成功弹窗（I-08：按来源分流） ================= */
 var YIJI_MINI_LINK = '#小程序://易捷加油/KwAREXFBvtRcunD';
+function gasOkPrimary(){
+  $('mGasOk').classList.remove('show');
+  if(gasSource === 'pkg'){
+    /* 券包来源：「去加油」跳转易捷加油小程序 */
+    showPage('pgList');
+    renderCards();
+    copyMiniLink();
+  } else {
+    /* 选择面值页来源：「去使用」进入我的券包 */
+    showPage('pgList');
+    renderCards();
+  }
+}
 function gotoMiniProgram(){
   $('mGasOk').classList.remove('show');
   showPage('pgHome');
@@ -1553,9 +2040,42 @@ function fallbackCopy(){
   showToast(ok ? '小程序口令已复制，请打开微信粘贴进入易捷加油' : '请在微信中粘贴小程序口令进入易捷加油使用');
 }
 function closeGasOk(){
+  /* I-08：「我知道了」返回来源页并刷新积分与可用状态 */
   $('mGasOk').classList.remove('show');
-  showPage('pgHome');
+  showPage(gasSource === 'pkg' ? 'pgList' : 'pgGasVoucher');
   renderCards();
+}
+
+/* ================= P3b 去加油确认弹窗 / P3c 核销成功弹窗 ================= */
+function useCoupon(btn){
+  /* 券包卡券「去加油」→ 确认使用弹窗（券名/面值/兑换手机号） */
+  var card = btn.closest('.sku-card');
+  openGasConfirm(card.dataset.face, card.dataset.phone);
+}
+function openGasConfirm(face, phone){
+  $('ucName').textContent = 'ZL-中国石化全国加油券' + face + '元';
+  $('ucFace').textContent = face;
+  $('ucPhone').textContent = maskPhone(phone || state.gasPhone);
+  $('mGasConfirm').classList.add('show');
+}
+function closeGasConfirm(){
+  $('mGasConfirm').classList.remove('show');
+}
+function confirmUseGas(){
+  /* 「核销使用」→ 核销成功弹窗（展示权益信息与二维码指引） */
+  $('uoName').textContent = $('ucName').textContent;
+  $('uoFace').textContent = '¥' + $('ucFace').textContent;
+  $('uoPhone').textContent = $('ucPhone').textContent;
+  $('mGasConfirm').classList.remove('show');
+  $('mGasUseOk').classList.add('show');
+}
+function useOkPrimary(){
+  /* 「打开易捷加油小程序」→ 复制小程序口令并提示粘贴到微信唤起 */
+  $('mGasUseOk').classList.remove('show');
+  copyMiniLink();
+}
+function useOkClose(){
+  $('mGasUseOk').classList.remove('show');
 }
 
 /* ================= P4 立减金兑换弹窗 ================= */
@@ -1594,6 +2114,8 @@ function submitVoucher(){
     $('vchOkFace').textContent = '¥' + state.voucherFace;
     $('mVoucher').classList.remove('show');
     $('mVoucherOk').classList.add('show');
+    /* 立减金兑换成功：生成订单（不生成券包） */
+    addOrder(state.voucherFace, cost, '支付宝通用立减金', '<i class="ri-alipay-fill"></i>', 'blue');
     renderCards();
   }, 800);
 }
@@ -1604,6 +2126,14 @@ function closeVoucherOk(){
   renderCards();
 }
 </script>
+
+
+
+
+
+
+
+
 
 
 
